@@ -38,12 +38,12 @@ export default function Rejilla({ posts, onAbrir }) {
             <div className="pie">
               <b>{p.titulo}</b>
               <span>
-                {p.autor ? `${p.autor} · ` : ""}
+                {p.marca ? `${p.marca}${p.modelo ? " " + p.modelo : ""} · ` : ""}
                 {p.estilo}
               </span>
               {!p.ejemplo && (
                 <span>
-                  ♥ {p.likes} · {p.comentarios}{" "}
+                  @{p.autor} · ♥ {p.likes} · {p.comentarios}{" "}
                   {p.comentarios === 1 ? "comentario" : "comentarios"}
                 </span>
               )}

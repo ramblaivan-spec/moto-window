@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
-import { estilos, tendencias } from "../data/fichas";
+import { tipos, estilos, gruposMarcas } from "../data/fichas";
 import Modal from "./Modal";
 
 // Reduce la foto a 1600 px como máximo para ahorrar espacio y cargar rápido.
@@ -41,9 +41,10 @@ export default function Subir({ usuario, onCerrar, onListo }) {
   const [archivo, setArchivo] = useState(null);
   const [vista, setVista] = useState("");
   const [titulo, setTitulo] = useState("");
+  const [tipo, setTipo] = useState("Moto");
+  const [marca, setMarca] = useState("");
+  const [modelo, setModelo] = useState("");
   const [estilo, setEstilo] = useState(estilos[0]);
-  const [moto, setMoto] = useState("");
-  const [tags, setTags] = useState([]);
   const [error, setError] = useState("");
   const [subiendo, setSubiendo] = useState(false);
 
@@ -54,16 +55,15 @@ export default function Subir({ usuario, onCerrar, onListo }) {
     setVista(URL.createObjectURL(f));
   }
 
-  function alternarTag(t) {
-    if (tags.includes(t)) setTags(tags.filter((x) => x !== t));
-    else if (tags.length < 3) setTags([...tags, t]);
-  }
-
   async function enviar(e) {
     e.preventDefault();
     setError("");
     if (!archivo || !titulo.trim()) {
       setError("Añade una foto y un título.");
+      return;
+    }
+    if (!marca) {
+      setError("Elige una marca.");
       return;
     }
     setSubiendo(true);
@@ -78,9 +78,11 @@ export default function Subir({ usuario, onCerrar, onListo }) {
       const { error: e2 } = await supabase.from("posts").insert({
         user_id: usuario.id,
         titulo: titulo.trim(),
+        tipo,
+        marca,
+        moto: modelo.trim(),
         estilo,
-        moto: moto.trim(),
-        tendencias: tags,
+        tendencias: [],
         imagen_url: data.publicUrl,
         imagen_path: ruta,
         ancho,
@@ -117,6 +119,44 @@ export default function Subir({ usuario, onCerrar, onListo }) {
         </label>
 
         <label className="campo">
+          <span>¿Qué es?</span>
+          <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+            {tipos.map((t) => (
+              <option key={t.valor} value={t.valor}>
+                {t.valor}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="campo">
+          <span>Marca</span>
+          <select value={marca} onChange={(e) => setMarca(e.target.value)}>
+            <option value="">Elige una marca</option>
+            {gruposMarcas.map((g) => (
+              <optgroup key={g.nombre} label={g.nombre}>
+                {g.marcas.map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+              </optgroup>
+            ))}
+            <option value="Otra">Otra</option>
+          </select>
+        </label>
+
+        <label className="campo">
+          <span>Modelo (opcional)</span>
+          <input
+            value={modelo}
+            onChange={(e) => setModelo(e.target.value)}
+            maxLength={80}
+            placeholder="Por ejemplo: MT-07"
+          />
+        </label>
+
+        <label className="campo">
           <span>Estilo</span>
           <select value={estilo} onChange={(e) => setEstilo(e.target.value)}>
             {estilos.map((s) => (
@@ -126,33 +166,6 @@ export default function Subir({ usuario, onCerrar, onListo }) {
             ))}
           </select>
         </label>
-
-        <label className="campo">
-          <span>Moto (opcional)</span>
-          <input
-            value={moto}
-            onChange={(e) => setMoto(e.target.value)}
-            maxLength={80}
-            placeholder="Por ejemplo: Yamaha MT-07"
-          />
-        </label>
-
-        <div className="campo">
-          <span>Tendencias (hasta 3)</span>
-          <div className="etiquetas">
-            {tendencias.map((t) => (
-              <button
-                key={t}
-                type="button"
-                className="chip chip-suave"
-                aria-pressed={tags.includes(t)}
-                onClick={() => alternarTag(t)}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-        </div>
 
         {error && <p className="error">{error}</p>}
 

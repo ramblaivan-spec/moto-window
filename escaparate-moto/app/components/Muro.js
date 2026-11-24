@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { estilos, tendencias } from "../data/fichas";
+import { tipos, estilos, gruposMarcas, colecciones } from "../data/fichas";
 import Rejilla from "./Rejilla";
 
 function normalizar(texto) {
@@ -11,32 +11,64 @@ function normalizar(texto) {
     .replace(/[̀-ͯ]/g, "");
 }
 
+// Dice si una publicación cumple los filtros. "saltar" ignora uno de ellos
+// (se usa para contar cuántos resultados tendría cada marca o estilo).
+function coincide(p, f, saltar) {
+  if (f.mundo) {
+    const enEstilo = f.mundo.estilos && f.mundo.estilos.includes(p.estilo);
+    const enMarca = f.mundo.marcas && f.mundo.marcas.includes(p.marca);
+    if (!enEstilo && !enMarca) return false;
+  }
+  if (saltar !== "tipo" && f.tipo && p.tipo !== f.tipo) return false;
+  if (saltar !== "estilo" && f.estilo && p.estilo !== f.estilo) return false;
+  if (saltar !== "marca" && f.marca && p.marca !== f.marca) return false;
+  if (f.q) {
+    const texto = normalizar(
+      [p.titulo, p.marca, p.modelo, p.estilo, p.tipo, p.autor || ""].join(" ")
+    );
+    if (!texto.includes(f.q)) return false;
+  }
+  return true;
+}
+
 export default function Muro({ posts, onAbrir, nota }) {
   const [busqueda, setBusqueda] = useState("");
+  const [mundoId, setMundoId] = useState("");
+  const [tipo, setTipo] = useState("");
   const [estilo, setEstilo] = useState("");
-  const [tendencia, setTendencia] = useState("");
+  const [marca, setMarca] = useState("");
 
-  const resultados = useMemo(() => {
-    const q = normalizar(busqueda.trim());
-    return posts.filter((p) => {
-      if (estilo && p.estilo !== estilo) return false;
-      if (tendencia && !p.tendencias.includes(tendencia)) return false;
-      if (q) {
-        const texto = normalizar(
-          [p.titulo, p.estilo, p.moto, p.tendencias.join(" "), p.autor || ""].join(" ")
-        );
-        if (!texto.includes(q)) return false;
-      }
-      return true;
-    });
-  }, [posts, busqueda, estilo, tendencia]);
+  const mundo = colecciones.find((c) => c.id === mundoId) || null;
 
-  const hayFiltros = busqueda || estilo || tendencia;
+  const f = useMemo(
+    () => ({ q: normalizar(busqueda.trim()), mundo, tipo, estilo, marca }),
+    [busqueda, mundo, tipo, estilo, marca]
+  );
+
+  const resultados = useMemo(() => posts.filter((p) => coincide(p, f)), [posts, f]);
+
+  function contar(campo, valor) {
+    return posts.filter((p) => coincide(p, f, campo) && p[campo] === valor).length;
+  }
+
+  function opcion(campo, valor, texto) {
+    const n = contar(campo, valor);
+    return (
+      <option key={valor} value={valor}>
+        {texto || valor}
+        {n > 0 ? ` · ${n}` : ""}
+      </option>
+    );
+  }
+
+  const hayFiltros = busqueda || mundoId || tipo || estilo || marca;
 
   function limpiar() {
     setBusqueda("");
+    setMundoId("");
+    setTipo("");
     setEstilo("");
-    setTendencia("");
+    setMarca("");
   }
 
   return (
@@ -46,45 +78,66 @@ export default function Muro({ posts, onAbrir, nota }) {
           type="search"
           value={busqueda}
           onChange={(e) => setBusqueda(e.target.value)}
-          placeholder="Buscar estilo, moto, tendencia o usuario"
+          placeholder="Buscar moto, componente, marca o usuario"
           aria-label="Buscar"
         />
       </div>
 
-      <div className="filtros" role="group" aria-label="Filtrar por estilo">
-        <button
-          type="button"
-          className="chip"
-          aria-pressed={estilo === ""}
-          onClick={() => setEstilo("")}
-        >
-          Todos
-        </button>
-        {estilos.map((e) => (
+      <div className="mundos-bloque">
+        <p className="etiqueta">Mundos</p>
+        <div className="mundos" role="group" aria-label="Mundos">
           <button
-            key={e}
             type="button"
             className="chip"
-            aria-pressed={estilo === e}
-            onClick={() => setEstilo(estilo === e ? "" : e)}
+            aria-pressed={mundoId === ""}
+            onClick={() => setMundoId("")}
           >
-            {e}
+            Todos
           </button>
-        ))}
+          {colecciones.map((c) => (
+            <button
+              key={c.id}
+              type="button"
+              className="chip"
+              aria-pressed={mundoId === c.id}
+              onClick={() => setMundoId(mundoId === c.id ? "" : c.id)}
+            >
+              {c.nombre}
+            </button>
+          ))}
+        </div>
+        {mundo && <p className="mundo-texto">{mundo.texto}</p>}
       </div>
 
-      <div className="filtros" role="group" aria-label="Filtrar por tendencia">
-        {tendencias.map((t) => (
-          <button
-            key={t}
-            type="button"
-            className="chip chip-suave"
-            aria-pressed={tendencia === t}
-            onClick={() => setTendencia(tendencia === t ? "" : t)}
-          >
-            {t}
-          </button>
-        ))}
+      <div className="desplegables">
+        <label className="desplegable">
+          <span>Tipo</span>
+          <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
+            <option value="">Todo</option>
+            {tipos.map((t) => opcion("tipo", t.valor, t.nombre))}
+          </select>
+        </label>
+
+        <label className="desplegable">
+          <span>Estilo</span>
+          <select value={estilo} onChange={(e) => setEstilo(e.target.value)}>
+            <option value="">Todos</option>
+            {estilos.map((s) => opcion("estilo", s))}
+          </select>
+        </label>
+
+        <label className="desplegable">
+          <span>Marca</span>
+          <select value={marca} onChange={(e) => setMarca(e.target.value)}>
+            <option value="">Todas</option>
+            {gruposMarcas.map((g) => (
+              <optgroup key={g.nombre} label={g.nombre}>
+                {g.marcas.map((m) => opcion("marca", m))}
+              </optgroup>
+            ))}
+            {opcion("marca", "Otra")}
+          </select>
+        </label>
       </div>
 
       <p className="contador">

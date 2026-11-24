@@ -77,20 +77,22 @@ export default function Detalle({
         </div>
 
         <dl>
+          <dt>Tipo</dt>
+          <dd>{post.tipo}</dd>
+          {post.marca && (
+            <>
+              <dt>Marca</dt>
+              <dd>{post.marca}</dd>
+            </>
+          )}
+          {post.modelo && (
+            <>
+              <dt>Modelo</dt>
+              <dd>{post.modelo}</dd>
+            </>
+          )}
           <dt>Estilo</dt>
           <dd>{post.estilo}</dd>
-          {post.moto && (
-            <>
-              <dt>Moto</dt>
-              <dd>{post.moto}</dd>
-            </>
-          )}
-          {post.tendencias.length > 0 && (
-            <>
-              <dt>Tendencias</dt>
-              <dd>{post.tendencias.join(", ")}</dd>
-            </>
-          )}
         </dl>
 
         <div className="acciones">

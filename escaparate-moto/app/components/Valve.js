@@ -15,8 +15,9 @@ function convertir(p) {
     id: p.id,
     titulo: p.titulo,
     estilo: p.estilo,
-    moto: p.moto || "",
-    tendencias: p.tendencias || [],
+    tipo: p.tipo || "Moto",
+    marca: p.marca || "",
+    modelo: p.moto || "",
     imagen: p.imagen_url,
     imagenPath: p.imagen_path,
     ratio: p.ancho ? p.alto / p.ancho : 1,
@@ -43,8 +44,9 @@ export default function Valve() {
         id: "e" + f.id,
         titulo: f.titulo,
         estilo: f.estilo,
-        moto: f.motos,
-        tendencias: f.tendencias,
+        tipo: f.tipo,
+        marca: f.marca,
+        modelo: f.modelo,
         ratio: f.alto,
         tono: f.tono,
         ejemplo: true,
@@ -80,7 +82,7 @@ export default function Valve() {
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "id,titulo,estilo,moto,tendencias,imagen_url,imagen_path,ancho,alto,user_id,created_at,profiles(username),likes(count),comentarios(count)"
+        "id,titulo,estilo,tipo,marca,moto,imagen_url,imagen_path,ancho,alto,user_id,created_at,profiles(username),likes(count),comentarios(count)"
       )
       .order("created_at", { ascending: false })
       .limit(80);

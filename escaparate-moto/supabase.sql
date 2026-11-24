@@ -14,6 +14,8 @@ create table public.posts (
   id uuid primary key default gen_random_uuid(),
   user_id uuid not null references public.profiles(id) on delete cascade,
   titulo text not null,
+  tipo text not null default 'Moto',
+  marca text not null default '',
   estilo text not null,
   moto text default '',
   tendencias text[] default '{}',
