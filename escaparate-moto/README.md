@@ -1,7 +1,9 @@
-# Escaparate moto – Bloque 1
+# Valve
 
-Muro visual con buscador y filtros por estilo y tendencia.
+Comunidad visual del mundo motero: muro con buscador y filtros, perfiles, subida de fotos, me gusta y comentarios.
 
-- El nombre de la web se cambia en `app/config.js`.
+- El nombre se cambia en `app/config.js`.
 - Las fichas de ejemplo están en `app/data/fichas.js`.
-- Los colores y el diseño están en `app/globals.css`.
+- El diseño está en `app/globals.css`.
+- La base de datos se crea con `supabase.sql` (Supabase > SQL Editor).
+- Variables necesarias en Netlify: `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
