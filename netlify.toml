@@ -1,4 +1,7 @@
-[build]
-  base = "escaparate-moto"
-  command = "npm run build"
-  publish = ".next"
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: "export",
+  images: { unoptimized: true },
+};
+
+module.exports = nextConfig;
