@@ -92,7 +92,7 @@ export const secciones = [
   },
   {
     id: 'componentes',
-    nombre: 'Componentes',
+    nombre: 'Accesorios y piezas',
     tipos: ['Componente', 'Accesorio', 'Herramienta'],
     grupos: [{ nombre: 'Marcas de componentes', marcas: marcasComponentes }],
   },

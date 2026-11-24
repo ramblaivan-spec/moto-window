@@ -18,6 +18,7 @@ function convertir(p) {
     tipo: p.tipo || "Moto",
     marca: p.marca || "",
     modelo: p.moto || "",
+    motoDe: p.motos ? `${p.motos.marca} ${p.motos.modelo}` : "",
     imagen: p.imagen_url,
     imagenPath: p.imagen_path,
     ratio: p.ancho ? p.alto / p.ancho : 1,
@@ -82,7 +83,7 @@ export default function Valve() {
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "id,titulo,estilo,tipo,marca,moto,imagen_url,imagen_path,ancho,alto,user_id,created_at,profiles(username),likes(count),comentarios(count)"
+        "id,titulo,estilo,tipo,marca,moto,imagen_url,imagen_path,ancho,alto,user_id,moto_id,created_at,profiles(username),motos(marca,modelo),likes(count),comentarios(count)"
       )
       .order("created_at", { ascending: false })
       .limit(80);

@@ -592,3 +592,42 @@ textarea:focus-visible {
   font-size: 14px;
   z-index: 30;
 }
+
+/* Garaje */
+.garaje {
+  margin-top: 28px;
+}
+
+.garaje h3 {
+  font-weight: 300;
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.motos {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.motos li {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  font-size: 14px;
+}
+
+.motos img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--tarjeta, #1c1c1c);
+}
+
+.motos span {
+  color: var(--suave);
+}

@@ -91,8 +91,18 @@ export default function Detalle({
               <dd>{post.modelo}</dd>
             </>
           )}
-          <dt>Estilo</dt>
-          <dd>{post.estilo}</dd>
+          {post.motoDe && (
+            <>
+              <dt>Moto</dt>
+              <dd>{post.motoDe}</dd>
+            </>
+          )}
+          {post.estilo && (
+            <>
+              <dt>Estilo</dt>
+              <dd>{post.estilo}</dd>
+            </>
+          )}
         </dl>
 
         <div className="acciones">

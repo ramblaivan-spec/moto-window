@@ -1,41 +1,11 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-import { tipos, estilos, seccionDeTipo } from "../data/fichas";
+import { tipos, seccionDeTipo } from "../data/fichas";
+import { reducir } from "../lib/imagen";
 import Modal from "./Modal";
-
-// Reduce la foto a 1600 px como máximo para ahorrar espacio y cargar rápido.
-function reducir(archivo, max = 1600) {
-  return new Promise((resolve, reject) => {
-    const url = URL.createObjectURL(archivo);
-    const img = new Image();
-    img.onload = () => {
-      const escala = Math.min(1, max / Math.max(img.width, img.height));
-      const ancho = Math.round(img.width * escala);
-      const alto = Math.round(img.height * escala);
-      const lienzo = document.createElement("canvas");
-      lienzo.width = ancho;
-      lienzo.height = alto;
-      lienzo.getContext("2d").drawImage(img, 0, 0, ancho, alto);
-      lienzo.toBlob(
-        (blob) => {
-          URL.revokeObjectURL(url);
-          if (blob) resolve({ blob, ancho, alto });
-          else reject(new Error("No se pudo procesar la imagen"));
-        },
-        "image/jpeg",
-        0.85
-      );
-    };
-    img.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error("Imagen no válida"));
-    };
-    img.src = url;
-  });
-}
 
 export default function Subir({ usuario, onCerrar, onListo }) {
   const [archivo, setArchivo] = useState(null);
@@ -44,9 +14,28 @@ export default function Subir({ usuario, onCerrar, onListo }) {
   const [tipo, setTipo] = useState("Moto");
   const [marca, setMarca] = useState("");
   const [modelo, setModelo] = useState("");
-  const [estilo, setEstilo] = useState(estilos[0]);
+  const [motoId, setMotoId] = useState("");
+  const [motos, setMotos] = useState([]);
   const [error, setError] = useState("");
   const [subiendo, setSubiendo] = useState(false);
+
+  useEffect(() => {
+    supabase
+      .from("motos")
+      .select("id,marca,modelo")
+      .eq("user_id", usuario.id)
+      .order("created_at")
+      .then(({ data }) => setMotos(data || []));
+  }, [usuario.id]);
+
+  function elegirMoto(id) {
+    setMotoId(id);
+    const m = motos.find((x) => x.id === id);
+    if (m && tipo === "Moto") {
+      if (!marca) setMarca(m.marca);
+      if (!modelo) setModelo(m.modelo);
+    }
+  }
 
   function elegirArchivo(e) {
     const f = e.target.files && e.target.files[0];
@@ -62,10 +51,6 @@ export default function Subir({ usuario, onCerrar, onListo }) {
       setError("Añade una foto y un título.");
       return;
     }
-    if (!marca) {
-      setError("Elige una marca.");
-      return;
-    }
     setSubiendo(true);
     try {
       const { blob, ancho, alto } = await reducir(archivo);
@@ -79,9 +64,10 @@ export default function Subir({ usuario, onCerrar, onListo }) {
         user_id: usuario.id,
         titulo: titulo.trim(),
         tipo,
-        marca,
+        marca: marca.trim(),
         moto: modelo.trim(),
-        estilo,
+        estilo: "",
+        moto_id: motoId || null,
         tendencias: [],
         imagen_url: data.publicUrl,
         imagen_path: ruta,
@@ -120,7 +106,7 @@ export default function Subir({ usuario, onCerrar, onListo }) {
 
         <label className="campo">
           <span>¿Qué es?</span>
-          <select value={tipo} onChange={(e) => { setTipo(e.target.value); setMarca(""); }}>
+          <select value={tipo} onChange={(e) => setTipo(e.target.value)}>
             {tipos.map((t) => (
               <option key={t.valor} value={t.valor}>
                 {t.valor}
@@ -130,20 +116,19 @@ export default function Subir({ usuario, onCerrar, onListo }) {
         </label>
 
         <label className="campo">
-          <span>Marca</span>
-          <select value={marca} onChange={(e) => setMarca(e.target.value)}>
-            <option value="">Elige una marca</option>
-            {seccionDeTipo(tipo).grupos.map((g) => (
-              <optgroup key={g.nombre} label={g.nombre}>
-                {g.marcas.map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
-              </optgroup>
+          <span>Marca (opcional)</span>
+          <input
+            value={marca}
+            onChange={(e) => setMarca(e.target.value)}
+            maxLength={60}
+            list="marcas-sugeridas"
+            placeholder="Escribe o elige una marca"
+          />
+          <datalist id="marcas-sugeridas">
+            {seccionDeTipo(tipo).grupos.flatMap((g) => g.marcas).map((m) => (
+              <option key={m} value={m} />
             ))}
-            <option value="Otra">Otra</option>
-          </select>
+          </datalist>
         </label>
 
         <label className="campo">
@@ -156,16 +141,19 @@ export default function Subir({ usuario, onCerrar, onListo }) {
           />
         </label>
 
-        <label className="campo">
-          <span>Estilo</span>
-          <select value={estilo} onChange={(e) => setEstilo(e.target.value)}>
-            {estilos.map((s) => (
-              <option key={s} value={s}>
-                {s}
-              </option>
-            ))}
-          </select>
-        </label>
+        {motos.length > 0 && (
+          <label className="campo">
+            <span>¿De cuál de tus motos? (opcional)</span>
+            <select value={motoId} onChange={(e) => elegirMoto(e.target.value)}>
+              <option value="">Ninguna</option>
+              {motos.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.marca} {m.modelo}
+                </option>
+              ))}
+            </select>
+          </label>
+        )}
 
         {error && <p className="error">{error}</p>}
 

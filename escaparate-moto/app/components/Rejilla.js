@@ -38,8 +38,9 @@ export default function Rejilla({ posts, onAbrir }) {
             <div className="pie">
               <b>{p.titulo}</b>
               <span>
-                {p.marca ? `${p.marca}${p.modelo ? " " + p.modelo : ""} · ` : ""}
-                {p.estilo}
+                {[p.marca ? `${p.marca}${p.modelo ? " " + p.modelo : ""}` : "", p.estilo]
+                  .filter(Boolean)
+                  .join(" · ")}
               </span>
               {!p.ejemplo && (
                 <span>
