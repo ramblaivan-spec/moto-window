@@ -11,8 +11,8 @@ export const metadata = {
 export default function Afiliacion() {
   return (
     <PaginaLegal titulo="Aviso de enlaces de afiliación">
-      <p>Algunos enlaces de Crank, como los botones “Ver en tienda”, pueden ser enlaces de afiliación. Si compras a través de ellos, la tienda puede pagarnos una comisión, sin ningún coste extra para ti.</p>
-      <p>Esto no cambia lo que mostramos: no ordenamos ni destacamos contenido por la comisión que pueda generar, y las fichas de marca se redactan a partir de fuentes públicas.</p>
+      <p>Algunos enlaces de Crank, como los botones “Ver en tienda”, pueden ser enlaces de afiliación. Esto significa que, si compras en la tienda a través de ellos, Crank puede recibir una pequeña comisión. A ti no te cuesta nada más.</p>
+      <p>Las comisiones no influyen en lo que mostramos: las fichas de marca se escriben a partir de fuentes públicas y no se ordenan por lo que pagan las tiendas.</p>
       <p>Los enlaces que ponen otros usuarios en sus publicaciones son responsabilidad de quien los publica.</p>
     </PaginaLegal>
   );
