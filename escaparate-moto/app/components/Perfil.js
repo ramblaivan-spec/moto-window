@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import Rejilla from "./Rejilla";
+import { registrar } from "../lib/eventos";
 import { reducir } from "../lib/imagen";
 
 export default function Perfil({ id, usuario, posts, onAbrir }) {
@@ -70,6 +71,7 @@ export default function Perfil({ id, usuario, posts, onAbrir }) {
         imagen_path,
       });
       if (e2) throw e2;
+      registrar("primera_moto", usuario.id);
       setMarca("");
       setModelo("");
       setAnio("");

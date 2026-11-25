@@ -6,6 +6,7 @@ import { supabase } from "../lib/supabase";
 import { tipos, seccionDeTipo } from "../data/fichas";
 import { reducir } from "../lib/imagen";
 import Modal from "./Modal";
+import { registrar } from "../lib/eventos";
 
 export default function Subir({ usuario, onCerrar, onListo }) {
   const [archivo, setArchivo] = useState(null);
@@ -84,6 +85,7 @@ export default function Subir({ usuario, onCerrar, onListo }) {
         await supabase.storage.from("fotos").remove([ruta]);
         throw e2;
       }
+      registrar("primera_publicacion", usuario.id);
       onListo();
     } catch (err) {
       setError("No se pudo subir la foto. Comprueba que es una imagen e inténtalo de nuevo.");

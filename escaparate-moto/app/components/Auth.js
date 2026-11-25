@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { supabase } from "../lib/supabase";
 import Modal from "./Modal";
+import { registrar } from "../lib/eventos";
 
 function traducir(mensaje) {
   const m = (mensaje || "").toLowerCase();
@@ -70,6 +71,7 @@ export default function Auth({ onCerrar, onListo }) {
       setError(traducir(err.message));
       return;
     }
+    registrar("registro");
     if (data.session) {
       onListo();
     } else {

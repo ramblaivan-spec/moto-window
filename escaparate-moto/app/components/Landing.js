@@ -3,11 +3,13 @@
 import { useEffect } from "react";
 import { supabase } from "../lib/supabase";
 import { NOMBRE } from "../config";
+import { registrar } from "../lib/eventos";
 
 export default function Landing() {
   // Quien ya tiene sesión, o vuelve de un correo de Supabase (confirmación,
   // recuperar contraseña), pasa directo al muro conservando los datos de la URL.
   useEffect(() => {
+    registrar("visita_landing", null, true);
     const h = window.location.hash || "";
     if (/access_token|refresh_token|type=|error=/.test(h) || /[?&]code=/.test(window.location.search)) {
       window.location.replace("/muro" + window.location.search + h);
