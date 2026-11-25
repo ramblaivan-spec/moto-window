@@ -1,13 +1,16 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { NOMBRE } from "../config";
 import { registrar } from "../lib/eventos";
 
 export default function Landing() {
-  // Quien ya tiene sesión, o vuelve de un correo de Supabase (confirmación,
-  // recuperar contraseña), pasa directo al muro conservando los datos de la URL.
+  const [conSesion, setConSesion] = useState(false);
+
+  // Quien vuelve de un correo de Supabase (confirmación, recuperar contraseña)
+  // pasa directo al muro conservando los datos de la URL. Quien ya tiene sesión
+  // ve la landing igualmente, con el botón cambiado.
   useEffect(() => {
     registrar("visita_landing", null, true);
     const h = window.location.hash || "";
@@ -17,7 +20,7 @@ export default function Landing() {
     }
     if (!supabase) return;
     supabase.auth.getSession().then(({ data }) => {
-      if (data.session) window.location.replace("/muro");
+      if (data.session) setConSesion(true);
     });
   }, []);
 
@@ -39,7 +42,7 @@ export default function Landing() {
         </p>
         <p>
           <a className="enlace-tienda" href="/muro">
-            Entrar al muro
+            {conSesion ? "Ir a mi muro" : "Entrar al muro"}
           </a>
         </p>
 
