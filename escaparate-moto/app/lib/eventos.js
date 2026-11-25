@@ -5,11 +5,10 @@ import { supabase } from "./supabase";
 export function registrar(evento, userId = null, unaVezPorSesion = false) {
   try {
     if (!supabase || typeof window === "undefined") return;
+    const clave = "ev_" + evento;
     if (unaVezPorSesion) {
-      const clave = "ev_" + evento;
       try {
         if (window.sessionStorage.getItem(clave)) return;
-        window.sessionStorage.setItem(clave, "1");
       } catch (e) {
         /* sin almacenamiento: se registra igualmente */
       }
@@ -18,7 +17,17 @@ export function registrar(evento, userId = null, unaVezPorSesion = false) {
       supabase
         .from("eventos")
         .insert({ evento, user_id: userId, ruta: window.location.pathname.slice(0, 200) })
-    ).catch(() => {});
+    )
+      .then(({ error }) => {
+        if (!error && unaVezPorSesion) {
+          try {
+            window.sessionStorage.setItem(clave, "1");
+          } catch (e) {
+            /* ignorar */
+          }
+        }
+      })
+      .catch(() => {});
   } catch (e) {
     /* ignorar */
   }
