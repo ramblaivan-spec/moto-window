@@ -259,4 +259,158 @@ export const marcasInfo = {
       ["Sump Magazine", "https://sumpmagazine.com/motorcycle-news/davida-crash-helmets.htm"],
     ],
   },
+  Triumph: {
+    slug: "triumph",
+    origen: "Hinckley, Inglaterra",
+    fundada: "Origen en el siglo XIX; fabricante actual desde 1983",
+    texto:
+      "Nació de la mano de Siegfried Bettmann, un emigrante alemán que montó en Coventry un negocio de bicicletas. Fabrica motos desde 1902 y se convirtió en uno de los grandes nombres británicos, con el Bonneville como modelo mítico. La empresa original quebró en 1983 y la actual, con sede en Hinckley, retomó el nombre y empezó a producir en 1991. Las fuentes dan fechas distintas para el origen de la marca (1885, 1887), por eso no fijamos una sola.",
+    web: "https://www.triumphmotorcycles.com",
+    fuentes: [
+      ["Triumph (línea del tiempo oficial)", "https://www.triumphmotorcycles.com/our-story/brand-timeline"],
+      ["Wikipedia: Triumph Engineering", "https://en.wikipedia.org/wiki/Triumph_Engineering"],
+      ["Wikipedia: Triumph Motorcycles Ltd", "https://en.wikipedia.org/wiki/Triumph_Motorcycles_Ltd"],
+    ],
+  },
+  "Royal Enfield": {
+    slug: "royal-enfield",
+    origen: "Redditch (Inglaterra) y Chennai (India)",
+    fundada: "1901 (primera moto)",
+    texto:
+      "Su primera moto es de 1901, fabricada por Enfield Cycle Company en Redditch, y se la considera la marca de motos más antigua en producción continua. La Bullet, de 1932, es el diseño de moto que más tiempo se ha fabricado. En 1955 se montó una filial en la India, y hoy la marca pertenece a Eicher Motors y fabrica en Chennai.",
+    web: "https://www.royalenfield.com",
+    fuentes: [
+      ["Royal Enfield (historia oficial)", "https://www.royalenfield.com/in/en/our-world/since-1901/"],
+      ["Wikipedia: Royal Enfield", "https://en.wikipedia.org/wiki/Royal_Enfield"],
+      ["Wikipedia: Royal Enfield (England)", "https://en.wikipedia.org/wiki/Royal_Enfield_(England)"],
+    ],
+  },
+  Ducati: {
+    slug: "ducati",
+    origen: "Bolonia (Borgo Panigale), Italia",
+    fundada: "1926",
+    texto:
+      "Los hermanos Ducati la fundaron el 4 de julio de 1926 para fabricar componentes de radio, no motos. La fábrica de Borgo Panigale se empezó a construir en 1935 y su primer producto de motor fue el Cucciolo, en 1946. Es hoy una de las marcas italianas más reconocibles por sus deportivas.",
+    web: "https://www.ducati.com",
+    fuentes: [
+      ["Ducati (crónica oficial)", "https://www.ducati.com/ww/en/heritage/ducati-chronicle"],
+      ["Ducati (los hermanos Ducati)", "https://www.ducati.com/ww/en/heritage/characters/the-ducati-brothers"],
+    ],
+  },
+  "Harley-Davidson": {
+    slug: "harley-davidson",
+    origen: "Milwaukee, Estados Unidos",
+    fundada: "1903",
+    texto:
+      "William Harley y Arthur Davidson construyeron su primera moto en 1903 en un cobertizo de Milwaukee, con ayuda del hermano de Arthur, Walter. La compañía se constituyó oficialmente en 1907. Sigue siendo una de las dos grandes marcas estadounidenses que superaron la Gran Depresión, junto a Indian, y es célebre por su cultura de personalización.",
+    web: "https://www.harley-davidson.com",
+    fuentes: [
+      ["Harley-Davidson (historia temprana)", "https://www.harley-davidson.com/us/en/content/expert-advice/harley-davidson-early-history.html"],
+      ["Wikipedia: Harley-Davidson", "https://en.wikipedia.org/wiki/Harley-Davidson"],
+    ],
+  },
+  BMW: {
+    slug: "bmw",
+    origen: "Múnich, Alemania",
+    fundada: "1923 (primera moto BMW)",
+    texto:
+      "BMW se fundó en 1916 como fabricante de motores de avión. Tras la Primera Guerra Mundial pasó a las motos, y en 1923 presentó la R 32, la primera con el nombre BMW, diseñada por Max Friz. Aquel motor bóxer de dos cilindros opuestos y la transmisión por cardán marcaron a la marca durante décadas.",
+    web: "https://www.bmw-motorrad.com",
+    fuentes: [
+      ["BMW Group: 100 años de BMW Motorrad", "https://www.bmwgroup.com/en/news/general/2023/100-years-bmw-motorrad.html"],
+      ["Wikipedia: BMW R32", "https://en.wikipedia.org/wiki/BMW_R32"],
+    ],
+  },
+  "Moto Guzzi": {
+    slug: "moto-guzzi",
+    origen: "Mandello del Lario, Italia",
+    fundada: "1921",
+    texto:
+      "Se creó el 15 de marzo de 1921 con sede legal en Génova, de la mano de Carlo Guzzi y Giorgio Parodi, con apoyo de la familia Parodi. Desde el principio se fabrica en Mandello del Lario, a orillas del lago de Como. Es conocida por su motor bicilíndrico en V de 90 grados y hoy pertenece al grupo Piaggio.",
+    fuentes: [
+      ["Pirelli: cien años de Moto Guzzi", "https://www.pirelli.com/global/en-ww/road/motorcycles/the-ingenious-eagle-one-hundred-years-of-moto-guzzi-53218"],
+      ["Piaggio Group: los fundadores", "https://wide.piaggiogroup.com/en/articles/people/the-founders-of-moto-guzzi/index.html"],
+    ],
+  },
+  Norton: {
+    slug: "norton",
+    origen: "Birmingham (origen) y Solihull, Inglaterra",
+    fundada: "1898",
+    texto:
+      "James Lansdowne Norton la fundó en Birmingham en 1898 para fabricar piezas y accesorios del sector de las dos ruedas. Su primera moto llegó en 1902 con motor comprado, y desde 1908 montó motores propios. Tiene un gran historial de competición. Hoy es propiedad de TVS Motor Company, la india, y fabrica en Solihull.",
+    web: "https://nortonmotorcycles.com",
+    fuentes: [
+      ["Norton (historia oficial)", "https://nortonmotorcycles.com/stories/history/"],
+      ["Wikipedia: Norton Motorcycle Company", "https://en.wikipedia.org/wiki/Norton_Motorcycle_Company"],
+    ],
+  },
+  BSA: {
+    slug: "bsa",
+    origen: "Birmingham, Inglaterra",
+    fundada: "1861 (la empresa matriz)",
+    texto:
+      "BSA son las siglas de Birmingham Small Arms: nació en 1861 como fabricante de armas y acabó siendo, según las fuentes, el mayor productor de motos del mundo en los años cincuenta. La producción de motos terminó a comienzos de los setenta. En 2016 el grupo indio Mahindra compró la marca y ha vuelto con la Gold Star 650. Una fuente da 1863 como año de la fábrica, no de la empresa.",
+    web: "https://bsamotorcycles.in",
+    fuentes: [
+      ["BSA (historia)", "https://bsamotorcycles.in/ar/pages/history"],
+      ["Mahindra (nota de prensa)", "https://mahindra.com/news-room/press-release/en/legendary-marque-bsa-launches-gold-star-650-motorcycle-in-india-the-worlds-most-eligible-single-is-here"],
+    ],
+  },
+  Indian: {
+    slug: "indian",
+    origen: "Springfield (Massachusetts), Estados Unidos",
+    fundada: "1901",
+    texto:
+      "George Hendee y Oscar Hedstrom fundaron Indian en 1901, dos años antes de Harley-Davidson. Llegó a ser el mayor fabricante de motos de Estados Unidos y su producción original terminó en 1953. Varias empresas intentaron revivir la marca y desde 2011 pertenece a Polaris.",
+    web: "https://www.indianmotorcycle.com",
+    fuentes: [
+      ["Indian Motorcycle (sobre la marca)", "https://indianmotorcycle.com/en-us/about/"],
+      ["Wikipedia: Indian Motorcycle", "https://en.wikipedia.org/wiki/Indian_Motorcycle"],
+    ],
+  },
+  Montesa: {
+    slug: "montesa",
+    origen: "Barcelona (Esplugues de Llobregat), España",
+    fundada: "1944",
+    texto:
+      "Pere Permanyer y Francesc Xavier Bultó empezaron en 1944 a fabricar motos ligeras en Barcelona. En 1958 Bultó se marchó tras desacuerdos sobre la competición y fundó Bultaco. Montesa es una marca histórica del trial y hoy forma parte de Honda. Algunas fuentes citan 1945 por el modelo A-45, que fue su primera moto.",
+    fuentes: [
+      ["Honda UK: 75 años de Montesa", "https://www.honda.co.uk/engineroom/bikes/75-years-of-montesa/"],
+      ["Wikipedia: Montesa Honda", "https://en.wikipedia.org/wiki/Montesa_Honda"],
+    ],
+  },
+  Bultaco: {
+    slug: "bultaco",
+    origen: "Sant Adrià de Besòs (Barcelona), España",
+    fundada: "1958",
+    texto:
+      "Francesc Xavier Bultó la fundó en 1958 después de dejar Montesa. Su nombre mezcla su apellido con las últimas letras de su apodo, Paco. Se hizo famosa por sus motos de dos tiempos para competición, sobre todo trial. La fábrica cerró en 1983 y la marca reapareció en 2014 como fabricante de motos eléctricas.",
+    fuentes: [
+      ["Gran Enciclopèdia Catalana", "https://www.enciclopedia.cat/gran-enciclopedia-catalana/bultaco"],
+      ["Wikipedia: Bultaco", "https://en.wikipedia.org/wiki/Bultaco"],
+    ],
+  },
+  Ossa: {
+    slug: "ossa",
+    origen: "Barcelona, España",
+    fundada: "1924",
+    texto:
+      "Manuel Giró fundó Ossa en 1924 para fabricar proyectores de cine. Las siglas vienen de Orpheo Sincronic Sociedad Anónima. Sus primeras motos de serie salieron hacia 1949 y se hizo conocida por sus motos ligeras de dos tiempos, sobre todo en trial. Estuvo activa hasta 1982 y volvió a existir entre 2010 y 2015.",
+    fuentes: [
+      ["Wikipedia: Ossa", "https://en.wikipedia.org/wiki/Ossa_(motorcycle)"],
+      ["Cycle World (1969)", "https://issues.cycleworld.com/article/1969/10/1/ossa"],
+    ],
+  },
+  "MV Agusta": {
+    slug: "mv-agusta",
+    origen: "Varese, Italia",
+    fundada: "1945",
+    texto:
+      "Nació el 19 de enero de 1945 en Cascina Costa, cerca de Milán, dentro de la familia Agusta, dedicada a la aviación. MV son las iniciales de Meccanica Verghera. Su primera moto fue la MV 98 y ganó muchos títulos mundiales, de la mano de pilotos como Giacomo Agostini. Hoy tiene sede en Varese y su capital ha cambiado varias veces.",
+    web: "https://www.mvagusta.com",
+    fuentes: [
+      ["MV Agusta: 80 aniversario", "https://www.mvagusta.com/news/mv-agusta-celebrates-its-80th-anniversary"],
+      ["Wikipedia: MV Agusta", "https://en.wikipedia.org/wiki/MV_Agusta"],
+    ],
+  },
 };
