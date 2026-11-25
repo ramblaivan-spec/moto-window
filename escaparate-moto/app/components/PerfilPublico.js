@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import { NOMBRE } from "../config";
+import { fichaDeMarca } from "../lib/marcas";
 import "./marcas.css";
 
 // Página pública de solo lectura: /garaje?u=<usuario>
@@ -117,6 +118,11 @@ export default function PerfilPublico() {
                       <b>
                         {m.marca} {m.modelo}
                       </b>
+                      {fichaDeMarca(m.marca) && (
+                        <a className="enlace-marca" href={`/marcas/${fichaDeMarca(m.marca).slug}`}>
+                          Sobre {fichaDeMarca(m.marca).nombre}
+                        </a>
+                      )}
                       {m.anio && <span>{m.anio}</span>}
                     </li>
                   ))}

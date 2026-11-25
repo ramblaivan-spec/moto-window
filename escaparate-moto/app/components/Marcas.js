@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { secciones } from "../data/fichas";
 import { marcasInfo } from "../data/marcasInfo";
 import Rejilla from "./Rejilla";
+import GarajesDeMarca from "./GarajesDeMarca";
 import "./marcas.css";
 
 function normalizar(t) {
@@ -130,6 +131,13 @@ export function PaginaMarca({ nombre, posts, siguiendo, onSeguir, onAbrir, onVol
               Web oficial
             </a>
           )}
+          {info.slug && (
+            <p>
+              <a href={`/marcas/${info.slug}`} className="enlace-marca">
+                Ficha completa y enlace para compartir
+              </a>
+            </p>
+          )}
         </div>
       ) : (
         <p className="nota">Ficha en preparación.</p>
@@ -140,6 +148,8 @@ export function PaginaMarca({ nombre, posts, siguiendo, onSeguir, onAbrir, onVol
           {siguiendo ? "Siguiendo" : "Seguir marca"}
         </button>
       </p>
+
+      <GarajesDeMarca marca={nombre} />
 
       {posts.length === 0 ? (
         <p className="vacio">Todavía nadie ha subido nada de esta marca.</p>

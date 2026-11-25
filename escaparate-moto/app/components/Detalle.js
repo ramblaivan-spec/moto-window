@@ -174,7 +174,11 @@ export default function Detalle({
           {post.motoDe && (
             <>
               <dt>Moto</dt>
-              <dd>{post.motoDe}</dd>
+              <dd>
+                <button type="button" className="enlace-marca" onClick={() => onPerfil(post.autorId)}>
+                  {post.motoDe}
+                </button>
+              </dd>
             </>
           )}
           {post.estilo && (

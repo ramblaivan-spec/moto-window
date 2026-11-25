@@ -48,3 +48,5 @@
 
 /* Publicaciones relacionadas */
 .parecidas { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--linea); display: grid; gap: 12px; }
+
+.garajes-marca { margin: 8px 0 24px; }
