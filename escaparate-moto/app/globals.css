@@ -68,10 +68,11 @@ textarea:focus-visible {
   top: 0;
   z-index: 5;
   background: var(--fondo);
-  padding: 18px 16px;
+  padding: 18px 16px 12px;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  gap: 12px;
 }
 
 .logo {
@@ -82,7 +83,9 @@ textarea:focus-visible {
 
 .menu {
   display: flex;
-  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 20px;
   font-size: 15px;
 }
 
