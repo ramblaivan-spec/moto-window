@@ -2,11 +2,12 @@ import "./marcas.css";
 import { NOMBRE, LEGAL, LEGAL_COMPLETO } from "../config";
 
 export function Identidad() {
-  const f = (v) => v || "[pendiente de completar]";
   return (
     <p>
-      Titular: {f(LEGAL.titular)} · NIF: {f(LEGAL.nif)} · Domicilio: {f(LEGAL.domicilio)} · Correo:{" "}
-      {f(LEGAL.email)}
+      Responsable: {LEGAL.titular || "[pendiente de completar]"}
+      {LEGAL.nif ? ` · NIF: ${LEGAL.nif}` : ""}
+      {LEGAL.domicilio ? ` · Domicilio: ${LEGAL.domicilio}` : ""} · Contacto:{" "}
+      <a href={"mailto:" + LEGAL.email}>{LEGAL.email}</a>
     </p>
   );
 }
