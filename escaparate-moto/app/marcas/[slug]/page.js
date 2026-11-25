@@ -12,9 +12,16 @@ export function generateStaticParams() {
 
 export function generateMetadata({ params }) {
   const m = todas.find((x) => x.slug === params.slug);
+  if (!m) return { title: "Crank" };
+  const title = `${m.nombre}: historia y dónde comprar | Crank`;
+  const description = `${m.nombre}, ${m.origen}. ${m.texto}`.slice(0, 160);
+  const url = `/marcas/${m.slug}`;
   return {
-    title: m ? `${m.nombre}: historia y dónde comprar | Crank` : "Crank",
-    description: m ? `${m.nombre}, ${m.origen}. ${m.texto}`.slice(0, 160) : "",
+    title,
+    description,
+    alternates: { canonical: url },
+    openGraph: { type: "article", siteName: "Crank", locale: "es_ES", title, description, url },
+    twitter: { card: "summary", title, description },
   };
 }
 

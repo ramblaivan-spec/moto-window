@@ -6,4 +6,4 @@ Comunidad visual del mundo motero: muro con buscador y filtros, perfiles, subida
 - Las fichas de ejemplo están en `app/data/fichas.js`.
 - El diseño está en `app/globals.css`.
 - La base de datos se crea con `supabase.sql` (Supabase > SQL Editor).
-- Variables necesarias en Netlify: `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
+- Publicación: Cloudflare Pages, desplegado desde GitHub (rama main). Variables necesarias en Cloudflare Pages: `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`.
