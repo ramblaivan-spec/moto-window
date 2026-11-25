@@ -14,6 +14,7 @@ export default function Subir({ usuario, onCerrar, onListo }) {
   const [tipo, setTipo] = useState("Moto");
   const [marca, setMarca] = useState("");
   const [modelo, setModelo] = useState("");
+  const [enlace, setEnlace] = useState("");
   const [motoId, setMotoId] = useState("");
   const [motos, setMotos] = useState([]);
   const [error, setError] = useState("");
@@ -47,8 +48,12 @@ export default function Subir({ usuario, onCerrar, onListo }) {
   async function enviar(e) {
     e.preventDefault();
     setError("");
-    if (!archivo || !titulo.trim()) {
-      setError("Añade una foto y un título.");
+    if (!archivo || !titulo.trim() || !marca.trim() || !modelo.trim()) {
+      setError("Añade una foto, un título, la marca y el modelo.");
+      return;
+    }
+    if (enlace.trim() && !/^https?:\/\//i.test(enlace.trim())) {
+      setError("El enlace debe empezar por http:// o https://");
       return;
     }
     setSubiendo(true);
@@ -67,6 +72,7 @@ export default function Subir({ usuario, onCerrar, onListo }) {
         marca: marca.trim(),
         moto: modelo.trim(),
         estilo: "",
+        enlace: enlace.trim() || null,
         moto_id: motoId || null,
         tendencias: [],
         imagen_url: data.publicUrl,
@@ -116,7 +122,7 @@ export default function Subir({ usuario, onCerrar, onListo }) {
         </label>
 
         <label className="campo">
-          <span>Marca (opcional)</span>
+          <span>Marca</span>
           <input
             value={marca}
             onChange={(e) => setMarca(e.target.value)}
@@ -132,12 +138,23 @@ export default function Subir({ usuario, onCerrar, onListo }) {
         </label>
 
         <label className="campo">
-          <span>Modelo (opcional)</span>
+          <span>Modelo</span>
           <input
             value={modelo}
             onChange={(e) => setModelo(e.target.value)}
             maxLength={80}
             placeholder="Por ejemplo: MT-07"
+          />
+        </label>
+
+        <label className="campo">
+          <span>Enlace a la tienda o web (opcional)</span>
+          <input
+            value={enlace}
+            onChange={(e) => setEnlace(e.target.value)}
+            maxLength={300}
+            inputMode="url"
+            placeholder="https://"
           />
         </label>
 

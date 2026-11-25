@@ -9,6 +9,8 @@ import Auth from "./Auth";
 import Subir from "./Subir";
 import Detalle from "./Detalle";
 import Perfil from "./Perfil";
+import Rejilla from "./Rejilla";
+import { Marcas, PaginaMarca } from "./Marcas";
 
 function convertir(p) {
   return {
@@ -24,6 +26,7 @@ function convertir(p) {
     ratio: p.ancho ? p.alto / p.ancho : 1,
     autor: p.profiles ? p.profiles.username : "anónimo",
     autorId: p.user_id,
+    enlace: p.enlace || "",
     likes: p.likes && p.likes[0] ? p.likes[0].count : 0,
     comentarios: p.comentarios && p.comentarios[0] ? p.comentarios[0].count : 0,
   };
@@ -38,6 +41,8 @@ export default function Valve() {
   const [abierto, setAbierto] = useState(null);
   const [vista, setVista] = useState({ tipo: "muro" });
   const [misLikes, setMisLikes] = useState(new Set());
+  const [guardados, setGuardados] = useState(new Set());
+  const [siguiendo, setSiguiendo] = useState(new Set());
 
   const ejemplos = useMemo(
     () =>
@@ -83,11 +88,11 @@ export default function Valve() {
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "id,titulo,estilo,tipo,marca,moto,imagen_url,imagen_path,ancho,alto,user_id,moto_id,created_at,profiles!user_id(username),motos(marca,modelo),likes(count),comentarios(count)"
+        "id,titulo,estilo,tipo,marca,moto,imagen_url,imagen_path,ancho,alto,user_id,moto_id,enlace,created_at,profiles!user_id(username),motos(marca,modelo),likes(count),comentarios(count)"
       )
       .order("created_at", { ascending: false })
       .limit(80);
-   if (error) avisar("Error: " + error.message);
+    if (error) avisar("Error: " + error.message);
     else setPosts(data.map(convertir));
     setCargando(false);
   }, []);
@@ -109,6 +114,67 @@ export default function Valve() {
   useEffect(() => {
     cargarLikes();
   }, [cargarLikes]);
+
+  // Guardados y marcas seguidas (si las tablas aún no existen, se ignora)
+  const cargarMios = useCallback(async () => {
+    if (!supabase || !usuario) {
+      setGuardados(new Set());
+      setSiguiendo(new Set());
+      return;
+    }
+    const g = await supabase.from("guardados").select("post_id").eq("user_id", usuario.id);
+    setGuardados(new Set((g.data || []).map((x) => x.post_id)));
+    const m = await supabase.from("marcas_seguidas").select("marca").eq("user_id", usuario.id);
+    setSiguiendo(new Set((m.data || []).map((x) => x.marca)));
+  }, [usuario]);
+
+  useEffect(() => {
+    cargarMios();
+  }, [cargarMios]);
+
+  async function alternarGuardado(post) {
+    if (!usuario) {
+      setModal("auth");
+      return;
+    }
+    const tiene = guardados.has(post.id);
+    const sig = new Set(guardados);
+    if (tiene) sig.delete(post.id);
+    else sig.add(post.id);
+    setGuardados(sig);
+    const { error } = tiene
+      ? await supabase.from("guardados").delete().eq("post_id", post.id).eq("user_id", usuario.id)
+      : await supabase.from("guardados").insert({ post_id: post.id, user_id: usuario.id });
+    if (error) {
+      avisar("No se pudo guardar.");
+      cargarMios();
+    }
+  }
+
+  async function alternarSeguir(marca) {
+    if (!usuario) {
+      setModal("auth");
+      return;
+    }
+    const tiene = siguiendo.has(marca);
+    const sig = new Set(siguiendo);
+    if (tiene) sig.delete(marca);
+    else sig.add(marca);
+    setSiguiendo(sig);
+    const { error } = tiene
+      ? await supabase.from("marcas_seguidas").delete().eq("marca", marca).eq("user_id", usuario.id)
+      : await supabase.from("marcas_seguidas").insert({ marca, user_id: usuario.id });
+    if (error) {
+      avisar("No se pudo actualizar.");
+      cargarMios();
+    }
+  }
+
+  function irAMarca(nombre) {
+    setAbierto(null);
+    setVista({ tipo: "marca", nombre });
+    window.scrollTo(0, 0);
+  }
 
   async function alternarLike(post) {
     if (!usuario) {
@@ -158,6 +224,8 @@ export default function Valve() {
     await supabase.auth.signOut();
     setVista({ tipo: "muro" });
     setMisLikes(new Set());
+    setGuardados(new Set());
+    setSiguiendo(new Set());
   }
 
   function irAPerfil(id) {
@@ -173,6 +241,8 @@ export default function Valve() {
       ? "Estas son fichas de ejemplo. Cuando la comunidad suba sus fotos, aparecerán aquí."
       : "";
   const postAbierto = posts.find((p) => p.id === abierto);
+  const normal = (t) =>
+    (t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
   return (
     <>
@@ -181,6 +251,9 @@ export default function Valve() {
           {NOMBRE}
         </button>
         <nav className="menu" aria-label="Principal">
+          <button type="button" onClick={() => setVista({ tipo: "marcas" })}>
+            Marcas
+          </button>
           <button
             type="button"
             className="destacado"
@@ -190,6 +263,9 @@ export default function Valve() {
           </button>
           {usuario ? (
             <>
+              <button type="button" onClick={() => setVista({ tipo: "guardados" })}>
+                Guardados
+              </button>
               <button type="button" onClick={() => irAPerfil(usuario.id)}>
                 Perfil
               </button>
@@ -208,6 +284,26 @@ export default function Valve() {
       <main className="principal">
         {vista.tipo === "muro" ? (
           <Muro posts={postsMuro} onAbrir={setAbierto} nota={nota} />
+        ) : vista.tipo === "marcas" ? (
+          <Marcas posts={postsMuro} siguiendo={siguiendo} onMarca={irAMarca} />
+        ) : vista.tipo === "marca" ? (
+          <PaginaMarca
+            nombre={vista.nombre}
+            posts={postsMuro.filter((p) => normal(p.marca) === normal(vista.nombre))}
+            siguiendo={siguiendo.has(vista.nombre)}
+            onSeguir={() => alternarSeguir(vista.nombre)}
+            onAbrir={setAbierto}
+            onVolver={() => setVista({ tipo: "marcas" })}
+          />
+        ) : vista.tipo === "guardados" ? (
+          <section>
+            <h2 className="titulo-vista">Guardados</h2>
+            {posts.filter((p) => guardados.has(p.id)).length === 0 ? (
+              <p className="vacio">Aún no has guardado nada. Abre una foto y pulsa Guardar.</p>
+            ) : (
+              <Rejilla posts={posts.filter((p) => guardados.has(p.id))} onAbrir={setAbierto} />
+            )}
+          </section>
         ) : (
           <Perfil
             id={vista.id}
@@ -249,6 +345,9 @@ export default function Valve() {
           onLike={alternarLike}
           onCerrar={() => setAbierto(null)}
           onPerfil={irAPerfil}
+          guardado={guardados.has(postAbierto.id)}
+          onGuardar={alternarGuardado}
+          onMarca={irAMarca}
           onEliminar={eliminar}
           onCambioComentarios={cambioComentarios}
         />
