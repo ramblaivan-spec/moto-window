@@ -624,3 +624,20 @@ textarea:focus-visible {
 .cabecera a { color: inherit; text-decoration: none; }
 .menu a { color: var(--suave); padding-bottom: 2px; border-bottom: 1px solid transparent; }
 .menu a:hover { color: var(--tinta); }
+
+/* Pulido: pie, botones de formulario y selector de archivo */
+.pie-legal { padding: 16px 30px 24px; }
+.limpiar { margin-left: 20px; }
+input[type="file"] { color: var(--suave); font: inherit; font-size: 0.9rem; }
+input[type="file"]::file-selector-button {
+  background: transparent;
+  color: var(--tinta);
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  padding: 8px 16px;
+  margin-right: 12px;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+input[type="file"]::file-selector-button:hover { border-color: var(--suave); }
