@@ -12,6 +12,7 @@ export default function PerfilPublico() {
   const [perfil, setPerfil] = useState(null);
   const [motos, setMotos] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [colecciones, setColecciones] = useState([]); // [{id, nombre, descripcion, posts:[...]}]
 
   useEffect(() => {
     const u = (new URLSearchParams(window.location.search).get("u") || "").trim().toLowerCase();
@@ -40,6 +41,40 @@ export default function PerfilPublico() {
           .order("created_at", { ascending: false })
           .limit(40),
       ]);
+      // Colecciones públicas (si algo falla, simplemente no se muestran)
+      try {
+        const c = await supabase
+          .from("colecciones")
+          .select("id,nombre,descripcion")
+          .eq("user_id", p.id)
+          .eq("publica", true)
+          .order("created_at", { ascending: false });
+        const cols = c.data || [];
+        if (cols.length) {
+          const cp = await supabase
+            .from("coleccion_posts")
+            .select("coleccion_id,post_id")
+            .in("coleccion_id", cols.map((x) => x.id));
+          const ids = [...new Set((cp.data || []).map((x) => x.post_id))];
+          const pp = ids.length
+            ? await supabase.from("posts").select("id,titulo,moto,imagen_url,ancho,alto").in("id", ids)
+            : { data: [] };
+          const porId = new Map((pp.data || []).map((x) => [x.id, x]));
+          setColecciones(
+            cols
+              .map((x) => ({
+                ...x,
+                posts: (cp.data || [])
+                  .filter((r) => r.coleccion_id === x.id)
+                  .map((r) => porId.get(r.post_id))
+                  .filter(Boolean),
+              }))
+              .filter((x) => x.posts.length > 0)
+          );
+        }
+      } catch (e) {
+        setColecciones([]);
+      }
       setPerfil(p);
       setMotos(m.data || []);
       setPosts(po.data || []);
@@ -107,6 +142,26 @@ export default function PerfilPublico() {
                 </div>
               </>
             )}
+
+            {colecciones.map((c) => (
+              <div key={c.id}>
+                <h2 className="titulo-vista">{c.nombre}</h2>
+                {c.descripcion && <p className="nota">{c.descripcion}</p>}
+                <div className="muro">
+                  {c.posts.map((p) => (
+                    <article key={p.id} className="tarjeta">
+                      <div className="imagen" style={{ aspectRatio: `1 / ${p.ancho ? p.alto / p.ancho : 1}` }}>
+                        <img src={p.imagen_url} alt={p.titulo} loading="lazy" />
+                      </div>
+                      <div className="pie">
+                        <b>{p.titulo}</b>
+                        {p.moto && <span>{p.moto}</span>}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            ))}
 
             <p style={{ marginTop: 32 }}>
               <a className="enlace-tienda" href="/muro">
