@@ -413,4 +413,143 @@ export const marcasInfo = {
       ["Wikipedia: MV Agusta", "https://en.wikipedia.org/wiki/MV_Agusta"],
     ],
   },
+  Brembo: {
+    slug: "brembo",
+    origen: "Paladina (Bérgamo), Italia",
+    fundada: "1961",
+    texto:
+      "Emilio Bombassei e Italo Breda la fundaron el 11 de enero de 1961 como un pequeño taller mecánico cerca de Bérgamo, y el nombre viene del río Brembo. Con el tiempo se especializó en frenos de disco: fue de las primeras en fabricarlos en Italia y desde 1975 suministra a Ferrari. Hoy equipa tanto coches como motos y compite en las principales categorías.",
+    web: "https://www.brembogroup.com/en",
+    fuentes: [
+      ["Wikipedia: Brembo", "https://en.wikipedia.org/wiki/Brembo"],
+      ["Jalopnik", "https://jalopnik.com/brembo-brakes-was-founded-because-of-a-truck-accident-1847363318"],
+      ["Automotive Hall of Fame", "https://www.automotivehalloffame.org/?p=5691"],
+    ],
+  },
+  Akrapovic: {
+    slug: "akrapovic",
+    origen: "Ivančna Gorica, Eslovenia",
+    fundada: "1991 (algunas fuentes dicen 1990)",
+    texto:
+      "Lo fundó Igor Akrapovič, un piloto de motos que preparaba sus propias máquinas y acabó fabricando escapes en un pequeño taller de Ivančna Gorica. Hoy es una de las marcas de escapes más conocidas, muy ligada a la competición. La mayor parte de la producción se hace en Črnomelj. Las fuentes no coinciden en el año: la mayoría habla de 1991 y otras de 1990.",
+    fuentes: [
+      ["MotoGP.com", "https://www.motogp.com/de/news/2021/09/15/akrapovi-30-years-of-building-a-heritage/185189"],
+      ["Slovenia Times", "https://sloveniatimes.com/24826/akrapovic-says-development-key-to-30-years-of-success"],
+      ["Wikipedia: Akrapovič", "https://en.wikipedia.org/wiki/Akrapovi%C4%8D"],
+    ],
+  },
+  Arrow: {
+    slug: "arrow",
+    origen: "San Giustino (Perugia), Italia",
+    fundada: "1985",
+    texto:
+      "Arrow Special Parts la fundó en 1985 Giorgio Giannelli, un piloto de motocross, para fabricar escapes de alto rendimiento. Empezó con motos de campo y después fue ampliando su gama a otros tipos de moto. Hoy fabrica en San Giustino, en Umbría, y vende en más de 60 países.",
+    web: "https://www.arrow.it",
+    fuentes: [
+      ["Wikipedia: Arrow", "https://en.wikipedia.org/wiki/Arrow_(motorcycle_part_manufacturer)"],
+      ["2to4wheels", "https://2to4wheels.com/arrow-exhaust"],
+    ],
+  },
+  Yoshimura: {
+    slug: "yoshimura",
+    origen: "Fukuoka (Japón) y Simi Valley (EE. UU.)",
+    fundada: "1954",
+    texto:
+      "Hideo «Pop» Yoshimura abrió en 1954 un taller de motos cerca de una base aérea estadounidense en el sur de Japón, donde preparaba motores. En 1972 se creó Yoshimura Racing en Simi Valley, California, y la historia de la marca se ligó a las primeras carreras de Superbike. Hoy hay una empresa en Japón y otra en Estados Unidos, y su fama viene de los escapes de competición.",
+    web: "https://www.yoshimura-jp.com",
+    fuentes: [
+      ["Yoshimura Japan: Hideo Yoshimura", "https://www.yoshimura-jp.com/en/?p=9123"],
+      ["Yoshimura Japan: historia 08", "https://www.yoshimura-jp.com/?p=50326"],
+      ["Wikipedia: Pops Yoshimura", "https://en.wikipedia.org/wiki/Pops_Yoshimura"],
+    ],
+  },
+  Ohlins: {
+    slug: "ohlins",
+    origen: "Upplands Väsby, Suecia",
+    fundada: "1976",
+    texto:
+      "Kenth Öhlin, piloto de motocross, la fundó en 1976 al comprobar que las suspensiones de las motos no aguantaban la potencia de sus motores. En 1978 ganó su primer título mundial. Es una de las marcas de suspensión más prestigiosas del motor. Su propiedad ha cambiado: según Wikipedia fue de Tenneco entre 2018 y 2024 y pertenece a Brembo desde 2025.",
+    web: "https://www.ohlins.com",
+    fuentes: [
+      ["Öhlins: historia", "https://ohlins.com/about/history"],
+      ["Wikipedia: Öhlins", "https://en.wikipedia.org/wiki/%C3%96hlins"],
+      ["ADAC MX Masters", "https://www.adac-motorsport.de/en/adac-mx-masters/news/2018/the-suspension-specialists-from-the-north-swedish-company-ohlins-not-only-influential-in-motocross/"],
+    ],
+  },
+  Renthal: {
+    slug: "renthal",
+    origen: "Manchester, Reino Unido",
+    fundada: "1969",
+    texto:
+      "Andrew Renshaw y Henry Rosenthal la fundaron en 1969 y su nombre une «Ren» de uno y «thal» del otro. Sus primeros manillares fueron de aluminio, para motos de trial, un material nuevo en aquel momento. Después dio el salto al motocross, donde es referencia, y hoy también fabrica transmisión y otros componentes.",
+    web: "https://www.renthal.com",
+    fuentes: [
+      ["Renthal: 50 años", "https://renthal.com/pages/grab-life-by-the-bars-50-years-of-renthal"],
+      ["Renthal: historia", "https://www.renthal.com/moto/renthal-history"],
+      ["Pinkbike", "https://pinkbike.com/news/video-renthal-celebrates-its-50th-birthday.html"],
+    ],
+  },
+  Termignoni: {
+    slug: "termignoni",
+    origen: "Predosa (Alessandria), Italia",
+    fundada: "1969",
+    texto:
+      "Luigi Termignoni abrió en 1969 un taller y concesionario de Ducati, Kawasaki y Honda, y acabó especializándose en escapes. Sus primeros escapes los hizo a mano. Es muy conocida por sus sistemas de competición y por los escapes de Ducati. Una de las fuentes sitúa el inicio de la fabricación en 1971 y otra a mediados de los años setenta.",
+    web: "https://termignoni.it/en/",
+    fuentes: [
+      ["Termignoni (web oficial)", "https://termignoni.it/en/?p=33030"],
+      ["RideApart", "https://www.rideapart.com/news/383030/luigi-termignoni-dead-age-75/"],
+      ["Bikesales", "https://www.bikesales.com.au/editorial/details/vale-luigi-termignoni-121689/"],
+    ],
+  },
+  "Vance & Hines": {
+    slug: "vance-and-hines",
+    origen: "Santa Fe Springs (California), Estados Unidos",
+    fundada: "1979 (según la empresa)",
+    texto:
+      "Nació de la amistad entre Terry Vance, piloto de drag racing, y Byron Hines, preparador de motores, que se conocieron en 1972. Su empresa fabrica escapes y otros componentes de rendimiento, muy ligados a las Harley-Davidson. La propia marca dice que la fundaron en 1979; Wikipedia habla de 1980.",
+    web: "https://www.vanceandhines.com",
+    fuentes: [
+      ["Vance & Hines: la empresa", "https://www.vanceandhines.com/page/the-company"],
+      ["Rider Magazine", "https://ridermagazine.com/vance-hines-four-decades-of-dominance/"],
+      ["Wikipedia: Terry Vance", "https://en.wikipedia.org/wiki/Terry_Vance"],
+    ],
+  },
+  Givi: {
+    slug: "givi",
+    origen: "Flero (Brescia), Italia",
+    fundada: "1978",
+    texto:
+      "Lo fundó Giuseppe Visenzi, antiguo piloto del Mundial de motociclismo, y el nombre une las primeras letras de su nombre y su apellido. Sus primeros productos fueron protectores de motor. Es muy conocida por sus maletas y baúles para moto, y desde hace poco también fabrica cascos.",
+    web: "https://www.givi.it",
+    fuentes: [
+      ["Givi: historia", "https://www.givi.it/history/"],
+      ["Givi: entrevista a Visenzi", "https://www.givi.it/news/eicma-visenzi-en"],
+      ["Wikipedia: Giuseppe Visenzi", "https://en.wikipedia.org/wiki/Giuseppe_Visenzi"],
+    ],
+  },
+  "SW-Motech": {
+    slug: "sw-motech",
+    origen: "Rauschenberg (Hesse), Alemania",
+    fundada: "1999",
+    texto:
+      "Jörg Diehl, Kai Jockel y Jürgen Swora la fundaron en 1999 en un granero de Bracht, y hoy su sede está en Rauschenberg. Empezó con accesorios metálicos para moto y después se unió con Bags-Connection, especializada en maletas blandas. Hoy es una de las marcas de accesorios más grandes, sobre todo para trail y viaje.",
+    web: "https://sw-motech.eu",
+    fuentes: [
+      ["SW-Motech: historia", "https://sw-motech.eu/en/brand-history"],
+      ["SW-Motech: la empresa", "https://sw-motech.info/en/company.html"],
+    ],
+  },
+  Motogadget: {
+    slug: "motogadget",
+    origen: "Berlín, Alemania",
+    fundada: "2000 (según la marca)",
+    texto:
+      "Todo empezó cuando Garrit Keller, ingeniero mecánico, fabricó en 1999 un velocímetro para su Moto Guzzi de carreras. La marca se fundó en Berlín con dos socios más y se hizo célebre en el mundo custom por su electrónica compacta y sus relojes minimalistas. La web de la marca dice que se fundó un año después de aquel velocímetro; otro artículo suyo habla de 2001.",
+    web: "https://www.motogadget.com",
+    fuentes: [
+      ["motogadget: sobre nosotros", "https://motogadget.com/en/pages/about"],
+      ["motogadget: el visionario", "https://www.motogadget.com/en/blogs/behind-the-scenes/der-visionar-hinter-motogadget"],
+    ],
+  },
 };
