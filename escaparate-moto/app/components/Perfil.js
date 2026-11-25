@@ -77,7 +77,7 @@ export default function Perfil({ id, usuario, posts, onAbrir }) {
       setAnadiendo(false);
       cargarMotos();
     } catch (err) {
-      setErrorMoto("No se pudo guardar la moto. Inténtalo de nuevo.");
+      setErrorMoto("Error: " + (err && err.message ? err.message : "desconocido"));
     }
     setGuardando(false);
   }
