@@ -27,6 +27,54 @@ function relacionadas(post, todos) {
 }
 import "./marcas.css";
 
+function Denunciar({ post, usuario }) {
+  const [abierto, setAbierto] = useState(false);
+  const [motivo, setMotivo] = useState("inapropiado");
+  const [detalle, setDetalle] = useState("");
+  const [estado, setEstado] = useState(""); // "" | enviado | ya | error
+
+  async function enviar(e) {
+    e.preventDefault();
+    const { error } = await supabase
+      .from("denuncias")
+      .insert({ post_id: post.id, user_id: usuario.id, motivo, detalle: detalle.trim() });
+    if (!error) setEstado("enviado");
+    else if (error.code === "23505") setEstado("ya");
+    else setEstado("error");
+  }
+
+  return (
+    <div className="denunciar">
+      <button type="button" onClick={() => setAbierto(!abierto)} aria-expanded={abierto}>
+        Denunciar
+      </button>
+      {abierto && estado === "" && (
+        <form onSubmit={enviar} className="col-lista">
+          <label className="campo">
+            <span>Motivo</span>
+            <select value={motivo} onChange={(e) => setMotivo(e.target.value)}>
+              <option value="inapropiado">Contenido inapropiado</option>
+              <option value="spam">Spam o publicidad engañosa</option>
+              <option value="derechos">Foto que no es de quien la sube / derechos</option>
+              <option value="otro">Otro</option>
+            </select>
+          </label>
+          <label className="campo">
+            <span>Detalle (opcional)</span>
+            <textarea value={detalle} onChange={(e) => setDetalle(e.target.value)} maxLength={300} rows={3} />
+          </label>
+          <button type="submit" className="accion">
+            Enviar denuncia
+          </button>
+        </form>
+      )}
+      {abierto && estado === "enviado" && <p className="nota">Gracias. Revisaremos esta publicación.</p>}
+      {abierto && estado === "ya" && <p className="nota">Ya habías denunciado esta publicación.</p>}
+      {abierto && estado === "error" && <p className="error">No se pudo enviar. Inténtalo más tarde.</p>}
+    </div>
+  );
+}
+
 export default function Detalle({
   post,
   usuario,
@@ -155,6 +203,7 @@ export default function Detalle({
               Ver en tienda
             </a>
           )}
+          {usuario && !propio && !post.ejemplo && <Denunciar post={post} usuario={usuario} />}
           {propio && (
             <button type="button" onClick={() => onEliminar(post)}>
               Eliminar
