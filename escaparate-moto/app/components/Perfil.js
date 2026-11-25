@@ -107,6 +107,23 @@ export default function Perfil({ id, usuario, posts, onAbrir }) {
       });
   }, [id]);
 
+  const [copiado, setCopiado] = useState(false);
+
+  async function compartir() {
+    const url = `${window.location.origin}/garaje?u=${encodeURIComponent(perfil.username)}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: "Mi garaje en Crank", url });
+      } else {
+        await navigator.clipboard.writeText(url);
+        setCopiado(true);
+        setTimeout(() => setCopiado(false), 2500);
+      }
+    } catch (e) {
+      /* el usuario canceló o el navegador no lo permite */
+    }
+  }
+
   async function guardar() {
     const limpia = bio.trim().slice(0, 200);
     const { error } = await supabase.from("profiles").update({ bio: limpia }).eq("id", id);
@@ -141,6 +158,12 @@ export default function Perfil({ id, usuario, posts, onAbrir }) {
             </button>
           )}
         </>
+      )}
+
+      {perfil && (
+        <button type="button" className="accion" onClick={compartir}>
+          {copiado ? "Enlace copiado" : "Compartir garaje"}
+        </button>
       )}
 
       <div className="garaje">
