@@ -87,7 +87,7 @@ export default function Valve() {
       )
       .order("created_at", { ascending: false })
       .limit(80);
-    if (error) avisar("No se pudo cargar el muro.");
+   if (error) avisar("Error: " + error.message);
     else setPosts(data.map(convertir));
     setCargando(false);
   }, []);
