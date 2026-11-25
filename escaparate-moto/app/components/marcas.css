@@ -16,3 +16,10 @@
 .marca-quitar { opacity: 0.6; font-size: 1.1rem; line-height: 1; }
 .titulo-siguiendo { font-weight: 400; font-size: 0.95rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 20px 0 0; }
 .siguiendo-bloque { border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 16px; margin-bottom: 8px; }
+
+/* Textos legales y pie de página */
+.ficha-marca h2 { font-weight: 400; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 24px 0 8px; }
+.ficha-marca p, .ficha-marca ul { margin: 0 0 10px; line-height: 1.6; }
+.ficha-marca ul { padding-left: 20px; }
+.pie-legal { padding: 16px 20px 24px; font-size: 0.8rem; opacity: 0.7; display: flex; gap: 16px; flex-wrap: wrap; }
+.pie-legal a { color: inherit; }
