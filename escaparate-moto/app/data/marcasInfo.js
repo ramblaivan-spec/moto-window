@@ -656,4 +656,107 @@ export const marcasInfo = {
       ["Wikipedia: Vespa", "https://en.wikipedia.org/wiki/Vespa"],
     ],
   },
+  Alpinestars: {
+    slug: "alpinestars",
+    origen: "Asolo (Treviso), Italia",
+    fundada: "1963",
+    texto:
+      "Sante Mazzarolo, zapatero de tercera generación, la fundó en 1963 y empezó haciendo botas de montaña y esquí. Al ver que el motocross empezaba a crecer en Europa, creó botas específicas para este deporte, que se convirtieron en referencia. Con el tiempo pasó a fabricar equipación completa para moto y automovilismo. La dirige su hijo Gabriele Mazzarolo.",
+    web: "https://www.alpinestars.com",
+    fuentes: [
+      ["Alpinestars: sobre nosotros", "https://ca.alpinestars.com/pages/about-us"],
+      ["Alpinestars: 1963, el principio", "https://www.alpinestars.com/pages/about-alpinestars/1000"],
+      ["The Drive", "https://www.thedrive.com/guides-and-gear/alpinestars-history"],
+    ],
+  },
+  Dainese: {
+    slug: "dainese",
+    origen: "Molvena (Vicenza), Italia",
+    fundada: "1972",
+    texto:
+      "Lino Dainese la creó en 1972 en un pequeño garaje de Molvena, y su primera prenda fueron unos pantalones de cuero para motocross. Es conocida por la protección: el primer protector de espalda, desarrollado con el piloto Barry Sheene, es de 1979. En 2007 compró el fabricante de cascos AGV. Su propiedad ha cambiado varias veces en los últimos años.",
+    web: "https://www.dainese.com",
+    fuentes: [
+      ["Dainese: su historia 1968-1979", "https://www.dainese.com/the-dainese-story/1968-1979.html"],
+      ["Dainese: sobre la marca", "https://www.dainese.com/dna.html"],
+      ["Wikipedia: Dainese", "https://en.wikipedia.org/wiki/Dainese"],
+    ],
+  },
+  AGV: {
+    slug: "agv",
+    origen: "Valenza (Piamonte), Italia",
+    fundada: "1947 (algunas fuentes dicen 1946)",
+    texto:
+      "Gino Amisano fundó AGV, siglas de Amisano Gino Valenza, y fabricó el primer casco en 1947. Se hizo famosa por sus cascos de competición y por su relación con el piloto Giacomo Agostini. Desde 2007 es filial de Dainese. Las fuentes no coinciden en el año: unas dicen 1946, cuando empezó con sillines de cuero, y otras 1947, el año del primer casco.",
+    web: "https://agv.com",
+    fuentes: [
+      ["AGV: sobre nosotros", "https://agv.com/us/en/about-us.html"],
+      ["AGV Sport: historia de Gino Amisano", "https://agvsport.com/history/agv-helmets-gino-amisano"],
+      ["Wikipedia: AGV", "https://en.wikipedia.org/wiki/AGV_(helmet_manufacturer)"],
+    ],
+  },
+  HJC: {
+    slug: "hjc",
+    origen: "Corea del Sur",
+    fundada: "1971",
+    texto:
+      "Wan Ki Hong fundó HJC en Corea del Sur en 1971, y desde sus inicios se dedica solo a los cascos de moto. Hoy fabrica en Corea y en Vietnam y vende en todo el mundo. La empresa sigue siendo familiar.",
+    web: "https://www.hjchelmets.eu",
+    fuentes: [
+      ["HJC: sobre nosotros", "https://hjchelmets.eu/pages/about"],
+      ["1000PS: dentro de HJC", "https://www.1000ps.com/en-gb/article/3012851/inside-hjc-behind-the-scenes-of-the-helmet-giant"],
+    ],
+  },
+  Bell: {
+    slug: "bell",
+    origen: "California, Estados Unidos",
+    fundada: "1954 (el negocio de origen es anterior)",
+    texto:
+      "Roy Richter fabricó el primer casco Bell en 1954 en un garaje detrás de su tienda de recambios, Bell Auto Parts, en la localidad californiana de Bell. Empezó con cascos para coches de carreras y añadió los de moto en 1971. En 1968 desarrolló el primer casco integral de la marca. La tienda de origen es de 1923, de ahí que algunas fichas den esa fecha.",
+    web: "https://www.bellhelmets.com",
+    fuentes: [
+      ["Bell Helmets: sobre nosotros", "https://de.bellhelmets.com/about.html"],
+      ["Wikipedia: Bell Sports", "https://en.wikipedia.org/wiki/Bell_Sports"],
+      ["The Henry Ford: casco Bell de 1980", "https://www.thehenryford.org/collections/explore/artifact/441210"],
+    ],
+  },
+  Klim: {
+    slug: "klim",
+    origen: "Rigby (Idaho), Estados Unidos",
+    fundada: "1999 (la empresa de origen, Teton Outfitters, es anterior)",
+    texto:
+      "Justin Summers empezó en los años noventa con Teton Outfitters, que hacía ropa técnica para patrullas de esquí y rescate. La marca Klim nació en 1999 con ropa para moto de nieve y en 2005 entró en las motos de campo y aventura. Polaris la compró en 2012. Las fuentes dan fechas distintas (1993, 1994, 1998) para la empresa de origen.",
+    web: "https://www.klim.com",
+    fuentes: [
+      ["Powersports Business: 25 años de Klim", "https://powersportsbusiness.com/?p=67152"],
+      ["Adventure Motorcycle: historia de Klim", "https://dev.adventuremotorcycle.com/riders/klim-company-profile"],
+      ["Wikipedia: Klim", "https://en.wikipedia.org/wiki/Klim_(clothing)"],
+    ],
+  },
+  Held: {
+    slug: "held",
+    origen: "Burgberg (Allgäu), Alemania",
+    fundada: "1946 (según la marca; otras fuentes dicen 1923)",
+    texto:
+      "Bruno Held y su hijo Edgar fundaron la empresa en Burgberg tras la Segunda Guerra Mundial, y empezaron con guantes de moda y de trabajo. En los años setenta pasó a los guantes de moto y después a la ropa completa. La marca celebró su 75 aniversario en 2021. Algunos medios hablan de 1923 como año de fundación, pero la propia empresa cuenta 1946.",
+    web: "https://www.held.de",
+    fuentes: [
+      ["Held: origen y desarrollo", "https://www.held.de/?p=67"],
+      ["Held: 75 años", "https://www.held.de/wpostahs-slider-category/englisch/"],
+      ["RevZilla: Held", "https://www.revzilla.com/held"],
+    ],
+  },
+  Barbour: {
+    slug: "barbour",
+    origen: "South Shields, Inglaterra",
+    fundada: "1894",
+    texto:
+      "John Barbour abrió su negocio en South Shields en 1894 para vestir a marineros y pescadores con ropa resistente a la lluvia. En los años treinta, su nieto Duncan, motero, lanzó una colección de moto de algodón encerado, y la chaqueta International se hizo famosa en las Six Days de trial. Aquella ropa de moto dejó de fabricarse en 1977, y Barbour International volvió como marca propia en 2013.",
+    web: "https://www.barbour.com",
+    fuentes: [
+      ["Barbour: nuestra historia", "https://www.barbour.com/our-history"],
+      ["Barbour: historia (hombre)", "https://www.barbour.com/us/mens/our-history.html"],
+      ["Wikipedia: Barbour", "https://en.wikipedia.org/wiki/Barbour_(company)"],
+    ],
+  },
 };
