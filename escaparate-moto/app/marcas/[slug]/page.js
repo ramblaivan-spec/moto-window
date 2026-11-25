@@ -35,12 +35,12 @@ export default function PaginaMarca({ params }) {
           Crank
         </a>
         <nav className="menu" aria-label="Principal">
-          <a href="/">Muro</a>
+          <a href="/muro">Muro</a>
         </nav>
       </header>
       <main className="principal">
         <p className="nota">
-          <a href="/">Crank</a> / Marcas
+          <a href="/muro">Crank</a> / Marcas
         </p>
         <h1 className="titulo-vista">{m.nombre}</h1>
         <p className="nota">

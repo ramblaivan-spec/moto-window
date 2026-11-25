@@ -1,5 +1,5 @@
-import Valve from "./components/Valve";
+import Landing from "./components/Landing";
 
 export default function Home() {
-  return <Valve />;
+  return <Landing />;
 }

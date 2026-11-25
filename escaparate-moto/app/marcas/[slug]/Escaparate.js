@@ -25,14 +25,14 @@ export default function Escaparate({ nombre }) {
   if (posts.length === 0)
     return (
       <p className="vacio">
-        Todavía nadie ha subido nada de {nombre}. <a href="/">Entra en Crank</a> y sé el primero.
+        Todavía nadie ha subido nada de {nombre}. <a href="/muro">Entra en Crank</a> y sé el primero.
       </p>
     );
 
   return (
     <div className="muro">
       {posts.map((p) => (
-        <a key={p.id} href="/" className="tarjeta tarjeta-boton">
+        <a key={p.id} href="/muro" className="tarjeta tarjeta-boton">
           <div className="imagen" style={{ aspectRatio: `1 / ${p.ancho ? p.alto / p.ancho : 1}` }}>
             <img src={p.imagen_url} alt={p.titulo} loading="lazy" />
           </div>

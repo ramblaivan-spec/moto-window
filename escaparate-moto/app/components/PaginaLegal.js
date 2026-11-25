@@ -20,7 +20,7 @@ export default function PaginaLegal({ titulo, children }) {
           {NOMBRE}
         </a>
         <nav className="menu" aria-label="Principal">
-          <a href="/">Muro</a>
+          <a href="/muro">Muro</a>
         </nav>
       </header>
       <main className="principal">
