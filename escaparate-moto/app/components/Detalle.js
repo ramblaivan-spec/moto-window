@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import Modal from "./Modal";
+import { GuardarEnColeccion } from "./Colecciones";
 import "./marcas.css";
 
 export default function Detalle({
@@ -120,6 +121,7 @@ export default function Detalle({
           <button type="button" onClick={() => onGuardar(post)} aria-pressed={guardado}>
             {guardado ? "Guardado" : "Guardar"}
           </button>
+          {usuario && !post.ejemplo && <GuardarEnColeccion post={post} usuario={usuario} />}
           {post.enlace && (
             <a
               className="enlace-tienda"

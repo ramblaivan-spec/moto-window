@@ -11,6 +11,7 @@ import Detalle from "./Detalle";
 import Perfil from "./Perfil";
 import Bienvenida from "./Bienvenida";
 import Rejilla from "./Rejilla";
+import { VistaColecciones } from "./Colecciones";
 import MarcasDePerfil from "./MarcasDePerfil";
 import { Marcas, PaginaMarca } from "./Marcas";
 
@@ -282,6 +283,9 @@ export default function Valve() {
               <button type="button" onClick={() => setVista({ tipo: "guardados" })}>
                 Guardados
               </button>
+              <button type="button" onClick={() => setVista({ tipo: "colecciones" })}>
+                Colecciones
+              </button>
               <button type="button" onClick={() => irAPerfil(usuario.id)}>
                 Perfil
               </button>
@@ -316,6 +320,8 @@ export default function Valve() {
             onAbrir={setAbierto}
             onVolver={() => setVista({ tipo: "marcas" })}
           />
+        ) : vista.tipo === "colecciones" && usuario ? (
+          <VistaColecciones usuario={usuario} posts={posts} onAbrir={setAbierto} />
         ) : vista.tipo === "guardados" ? (
           <section>
             <h2 className="titulo-vista">Guardados</h2>

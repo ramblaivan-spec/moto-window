@@ -37,3 +37,11 @@
 .bienvenida h2 { font-weight: 400; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
 .bienvenida p { opacity: 0.8; line-height: 1.6; margin-bottom: 14px; }
 .bienvenida-acciones { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+
+/* Colecciones */
+.col-panel { display: inline-block; }
+.col-lista { margin-top: 8px; padding: 10px; border: 1px solid var(--linea); border-radius: 8px; display: grid; gap: 8px; min-width: 220px; }
+.col-fila { display: flex; gap: 8px; align-items: center; cursor: pointer; }
+.col-grid { list-style: none; padding: 0; margin: 16px 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.col-grid button { width: 100%; text-align: left; padding: 16px; border: 1px solid var(--linea); border-radius: 10px; background: transparent; color: var(--tinta); display: grid; gap: 6px; cursor: pointer; }
+.col-grid span { color: var(--suave); font-size: 0.85rem; }
