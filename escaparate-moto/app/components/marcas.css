@@ -45,3 +45,6 @@
 .col-grid { list-style: none; padding: 0; margin: 16px 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
 .col-grid button { width: 100%; text-align: left; padding: 16px; border: 1px solid var(--linea); border-radius: 10px; background: transparent; color: var(--tinta); display: grid; gap: 6px; cursor: pointer; }
 .col-grid span { color: var(--suave); font-size: 0.85rem; }
+
+/* Publicaciones relacionadas */
+.parecidas { margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--linea); display: grid; gap: 12px; }

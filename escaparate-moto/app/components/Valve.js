@@ -381,6 +381,8 @@ export default function Valve() {
           onMarca={irAMarca}
           onEliminar={eliminar}
           onCambioComentarios={cambioComentarios}
+          todos={posts}
+          onAbrirOtro={setAbierto}
         />
       )}
 

@@ -5,6 +5,26 @@ import { useCallback, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import Modal from "./Modal";
 import { GuardarEnColeccion } from "./Colecciones";
+import Rejilla from "./Rejilla";
+
+const norm = (t) => (t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+
+// Publicaciones parecidas: misma marca (3), mismo estilo (2), mismo tipo (1).
+// Solo cuenta como parecida si coincide la marca o el estilo.
+function relacionadas(post, todos) {
+  return (todos || [])
+    .filter((p) => p.id !== post.id && !p.ejemplo)
+    .map((p) => {
+      const marca = post.marca && norm(p.marca) === norm(post.marca);
+      const estilo = post.estilo && norm(p.estilo) === norm(post.estilo);
+      const tipo = norm(p.tipo) === norm(post.tipo);
+      return { p, puntos: (marca ? 3 : 0) + (estilo ? 2 : 0) + (tipo ? 1 : 0), ok: marca || estilo };
+    })
+    .filter((x) => x.ok)
+    .sort((a, b) => b.puntos - a.puntos || b.p.likes - a.p.likes)
+    .slice(0, 6)
+    .map((x) => x.p);
+}
 import "./marcas.css";
 
 export default function Detalle({
@@ -19,6 +39,8 @@ export default function Detalle({
   onMarca,
   onEliminar,
   onCambioComentarios,
+  todos,
+  onAbrirOtro,
 }) {
   const [lista, setLista] = useState([]);
   const [texto, setTexto] = useState("");
@@ -62,6 +84,7 @@ export default function Detalle({
     }
   }
 
+  const parecidas = relacionadas(post, todos);
   const propio = usuario && usuario.id === post.autorId;
 
   return (
@@ -174,6 +197,13 @@ export default function Detalle({
           )}
           {error && <p className="error">{error}</p>}
         </div>
+
+        {parecidas.length > 0 && onAbrirOtro && (
+          <div className="parecidas">
+            <b>Más como esto</b>
+            <Rejilla posts={parecidas} onAbrir={onAbrirOtro} />
+          </div>
+        )}
       </div>
     </Modal>
   );
