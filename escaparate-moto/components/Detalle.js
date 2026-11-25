@@ -4,6 +4,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import Modal from "./Modal";
+import "./marcas.css";
 
 export default function Detalle({
   post,
@@ -12,6 +13,9 @@ export default function Detalle({
   onLike,
   onCerrar,
   onPerfil,
+  guardado,
+  onGuardar,
+  onMarca,
   onEliminar,
   onCambioComentarios,
 }) {
@@ -82,7 +86,11 @@ export default function Detalle({
           {post.marca && (
             <>
               <dt>Marca</dt>
-              <dd>{post.marca}</dd>
+              <dd>
+                <button type="button" className="enlace-marca" onClick={() => onMarca(post.marca)}>
+                  {post.marca}
+                </button>
+              </dd>
             </>
           )}
           {post.modelo && (
@@ -91,14 +99,37 @@ export default function Detalle({
               <dd>{post.modelo}</dd>
             </>
           )}
-          <dt>Estilo</dt>
-          <dd>{post.estilo}</dd>
+          {post.motoDe && (
+            <>
+              <dt>Moto</dt>
+              <dd>{post.motoDe}</dd>
+            </>
+          )}
+          {post.estilo && (
+            <>
+              <dt>Estilo</dt>
+              <dd>{post.estilo}</dd>
+            </>
+          )}
         </dl>
 
         <div className="acciones">
           <button type="button" onClick={() => onLike(post)} aria-pressed={liked}>
             {liked ? "♥ Te gusta" : "♡ Me gusta"} · {post.likes}
           </button>
+          <button type="button" onClick={() => onGuardar(post)} aria-pressed={guardado}>
+            {guardado ? "Guardado" : "Guardar"}
+          </button>
+          {post.enlace && (
+            <a
+              className="enlace-tienda"
+              href={post.enlace}
+              target="_blank"
+              rel="noopener noreferrer nofollow sponsored"
+            >
+              Ver en tienda
+            </a>
+          )}
           {propio && (
             <button type="button" onClick={() => onEliminar(post)}>
               Eliminar
