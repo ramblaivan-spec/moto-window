@@ -5,7 +5,7 @@ export const SITIO = "https://crank-elx.pages.dev";
 // Rellenar antes de abrir el registro al público. Mientras estén vacíos,
 // las páginas legales se marcan como borrador y no se indexan.
 export const LEGAL = {
-  titular: "", // nombre del responsable (persona o proyecto)
+  titular: "Crank project", // nombre del responsable (persona o proyecto)
   nif: "", // opcional: solo si hay actividad económica
   domicilio: "", // opcional: solo si hay actividad económica
   email: "crank.contact@proton.me", // contacto para privacidad y soporte
