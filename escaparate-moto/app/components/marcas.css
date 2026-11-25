@@ -11,3 +11,8 @@
 .enlace-marca { border: none; padding: 0; text-decoration: underline; border-radius: 0; }
 .enlace-tienda { display: inline-block; border: 1px solid rgba(255,255,255,0.5); color: inherit; text-decoration: none; padding: 8px 14px; border-radius: 999px; font-weight: 300; }
 .ficha-marca { margin-bottom: 12px; max-width: 60ch; }
+.marca-item.siguiendo { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.08); }
+.marca-nombre, .marca-quitar { background: none; border: none; color: inherit; font: inherit; cursor: pointer; padding: 0; }
+.marca-quitar { opacity: 0.6; font-size: 1.1rem; line-height: 1; }
+.titulo-siguiendo { font-weight: 400; font-size: 0.95rem; letter-spacing: 0.1em; text-transform: uppercase; margin: 20px 0 0; }
+.siguiendo-bloque { border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 16px; margin-bottom: 8px; }

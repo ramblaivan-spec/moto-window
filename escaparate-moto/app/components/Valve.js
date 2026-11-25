@@ -10,6 +10,7 @@ import Subir from "./Subir";
 import Detalle from "./Detalle";
 import Perfil from "./Perfil";
 import Rejilla from "./Rejilla";
+import MarcasDePerfil from "./MarcasDePerfil";
 import { Marcas, PaginaMarca } from "./Marcas";
 
 function convertir(p) {
@@ -146,7 +147,7 @@ export default function Valve() {
       ? await supabase.from("guardados").delete().eq("post_id", post.id).eq("user_id", usuario.id)
       : await supabase.from("guardados").insert({ post_id: post.id, user_id: usuario.id });
     if (error) {
-      avisar("No se pudo guardar.");
+      avisar("Error: " + error.message);
       cargarMios();
     }
   }
@@ -165,7 +166,7 @@ export default function Valve() {
       ? await supabase.from("marcas_seguidas").delete().eq("marca", marca).eq("user_id", usuario.id)
       : await supabase.from("marcas_seguidas").insert({ marca, user_id: usuario.id });
     if (error) {
-      avisar("No se pudo actualizar.");
+      avisar("Error: " + error.message);
       cargarMios();
     }
   }
@@ -285,7 +286,7 @@ export default function Valve() {
         {vista.tipo === "muro" ? (
           <Muro posts={postsMuro} onAbrir={setAbierto} nota={nota} />
         ) : vista.tipo === "marcas" ? (
-          <Marcas posts={postsMuro} siguiendo={siguiendo} onMarca={irAMarca} />
+          <Marcas posts={postsMuro} siguiendo={siguiendo} onMarca={irAMarca} onSeguir={alternarSeguir} />
         ) : vista.tipo === "marca" ? (
           <PaginaMarca
             nombre={vista.nombre}
@@ -305,12 +306,15 @@ export default function Valve() {
             )}
           </section>
         ) : (
-          <Perfil
-            id={vista.id}
-            usuario={usuario}
-            posts={posts.filter((p) => p.autorId === vista.id)}
-            onAbrir={setAbierto}
-          />
+          <>
+            <Perfil
+              id={vista.id}
+              usuario={usuario}
+              posts={posts.filter((p) => p.autorId === vista.id)}
+              onAbrir={setAbierto}
+            />
+            <MarcasDePerfil key={vista.id + siguiendo.size} id={vista.id} onMarca={irAMarca} />
+          </>
         )}
       </main>
 

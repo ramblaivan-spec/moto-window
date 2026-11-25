@@ -13,7 +13,7 @@ function normalizar(t) {
     .replace(/[̀-ͯ]/g, "");
 }
 
-export function Marcas({ posts, siguiendo, onMarca }) {
+export function Marcas({ posts, siguiendo, onMarca, onSeguir }) {
   const [q, setQ] = useState("");
 
   const cuentas = useMemo(() => {
@@ -27,6 +27,21 @@ export function Marcas({ posts, siguiendo, onMarca }) {
 
   const buscar = normalizar(q.trim());
 
+  const gruposSeguidos = useMemo(() => {
+    const usadas = new Set();
+    const res = [];
+    secciones.forEach((sec) =>
+      sec.grupos.forEach((g) => {
+        const lista = g.marcas.filter((m) => siguiendo.has(m));
+        lista.forEach((m) => usadas.add(m));
+        if (lista.length) res.push({ nombre: g.nombre, marcas: lista });
+      })
+    );
+    const otras = [...siguiendo].filter((m) => !usadas.has(m)).sort((a, b) => a.localeCompare(b, "es"));
+    if (otras.length) res.push({ nombre: "Otras", marcas: otras });
+    return res;
+  }, [siguiendo]);
+
   return (
     <section>
       <h2 className="titulo-vista">Marcas</h2>
@@ -39,6 +54,34 @@ export function Marcas({ posts, siguiendo, onMarca }) {
           aria-label="Buscar marca"
         />
       </div>
+
+      {siguiendo.size > 0 && (
+        <div className="siguiendo-bloque">
+          <h3 className="titulo-siguiendo">Marcas que sigues</h3>
+          {gruposSeguidos.map((g) => (
+            <div key={g.nombre} className="grupo-marcas">
+              <h3>{g.nombre}</h3>
+              <div className="lista-marcas">
+                {g.marcas.map((m) => (
+                  <span key={m} className="marca-item siguiendo">
+                    <button type="button" className="marca-nombre" onClick={() => onMarca(m)}>
+                      {m}
+                    </button>
+                    <button
+                      type="button"
+                      className="marca-quitar"
+                      aria-label={`Dejar de seguir ${m}`}
+                      onClick={() => onSeguir(m)}
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {secciones.map((s) =>
         s.grupos.map((g) => {
