@@ -83,7 +83,7 @@ export default function Valve() {
     const { data, error } = await supabase
       .from("posts")
       .select(
-        "id,titulo,estilo,tipo,marca,moto,imagen_url,imagen_path,ancho,alto,user_id,moto_id,created_at,profiles(username),motos(marca,modelo),likes(count),comentarios(count)"
+        "id,titulo,estilo,tipo,marca,moto,imagen_url,imagen_path,ancho,alto,user_id,moto_id,created_at,profiles!user_id(username),motos(marca,modelo),likes(count),comentarios(count)"
       )
       .order("created_at", { ascending: false })
       .limit(80);
