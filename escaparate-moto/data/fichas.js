@@ -56,6 +56,7 @@ export const marcasComponentes = ordenar([
 ]);
 
 export const marcasRopa = ordenar([
+  'Kushitani','Halvarssons','Dane','Langlitz Leathers','Aether','DMD','Vanson Leathers',
   'Airoh','Kadoya','Komine','RS Taichi','Alpinestars','Arai','AGV','Bandit','Barbour','Bell','Belstaff','Biltwell',
   'Caberg','Dainese','Davida','Furygan','Gaerne','Hedon','Held','Hevik','HJC','Iguana Custom Collection',
   'Ixon','Klim','Lewis Leathers','LS2','Merlin','Nexx','Nolan','Origine','Oxford','Pando Moto',
@@ -92,7 +93,7 @@ export const secciones = [
   },
   {
     id: 'componentes',
-    nombre: 'Componentes',
+    nombre: 'Accesorios y piezas',
     tipos: ['Componente', 'Accesorio', 'Herramienta'],
     grupos: [{ nombre: 'Marcas de componentes', marcas: marcasComponentes }],
   },
