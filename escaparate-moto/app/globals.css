@@ -633,3 +633,8 @@ textarea:focus-visible {
 .motos span {
   color: var(--suave);
 }
+
+/* Enlaces de la cabecera con el mismo aspecto que los botones del menú */
+.cabecera a { color: inherit; text-decoration: none; }
+.menu a { color: var(--suave); padding-bottom: 2px; border-bottom: 1px solid transparent; }
+.menu a:hover { color: var(--tinta); }
