@@ -6,7 +6,7 @@ import Rejilla from "./Rejilla";
 import { registrar } from "../lib/eventos";
 import { reducir } from "../lib/imagen";
 
-export default function Perfil({ id, usuario, posts, onAbrir }) {
+export default function Perfil({ id, usuario, posts, onAbrir, abrirFormularioMoto }) {
   const [perfil, setPerfil] = useState(null);
   const [editando, setEditando] = useState(false);
   const [bio, setBio] = useState("");
@@ -14,7 +14,7 @@ export default function Perfil({ id, usuario, posts, onAbrir }) {
   const propio = usuario && usuario.id === id;
 
   const [motos, setMotos] = useState([]);
-  const [anadiendo, setAnadiendo] = useState(false);
+  const [anadiendo, setAnadiendo] = useState(Boolean(abrirFormularioMoto));
   const [marca, setMarca] = useState("");
   const [modelo, setModelo] = useState("");
   const [anio, setAnio] = useState("");

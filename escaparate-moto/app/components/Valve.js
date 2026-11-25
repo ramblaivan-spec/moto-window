@@ -9,6 +9,7 @@ import Auth from "./Auth";
 import Subir from "./Subir";
 import Detalle from "./Detalle";
 import Perfil from "./Perfil";
+import Bienvenida from "./Bienvenida";
 import Rejilla from "./Rejilla";
 import MarcasDePerfil from "./MarcasDePerfil";
 import { Marcas, PaginaMarca } from "./Marcas";
@@ -44,6 +45,7 @@ export default function Valve() {
   const [misLikes, setMisLikes] = useState(new Set());
   const [guardados, setGuardados] = useState(new Set());
   const [siguiendo, setSiguiendo] = useState(new Set());
+  const [numMotos, setNumMotos] = useState(null);
 
   const ejemplos = useMemo(
     () =>
@@ -132,6 +134,19 @@ export default function Valve() {
   useEffect(() => {
     cargarMios();
   }, [cargarMios]);
+
+  // ¿Tiene ya alguna moto? Solo para decidir si se muestra la bienvenida.
+  useEffect(() => {
+    if (!supabase || !usuario) {
+      setNumMotos(null);
+      return;
+    }
+    supabase
+      .from("motos")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", usuario.id)
+      .then(({ count, error }) => setNumMotos(error ? null : count));
+  }, [usuario, vista.tipo]);
 
   async function alternarGuardado(post) {
     if (!usuario) {
@@ -229,9 +244,9 @@ export default function Valve() {
     setSiguiendo(new Set());
   }
 
-  function irAPerfil(id) {
+  function irAPerfil(id, anadirMoto = false) {
     setAbierto(null);
-    setVista({ tipo: "perfil", id });
+    setVista({ tipo: "perfil", id, anadirMoto });
     window.scrollTo(0, 0);
   }
 
@@ -284,7 +299,12 @@ export default function Valve() {
 
       <main className="principal">
         {vista.tipo === "muro" ? (
-          <Muro posts={postsMuro} onAbrir={setAbierto} nota={nota} />
+          <>
+            {usuario && numMotos === 0 && (
+              <Bienvenida onAnadir={() => irAPerfil(usuario.id, true)} />
+            )}
+            <Muro posts={postsMuro} onAbrir={setAbierto} nota={nota} />
+          </>
         ) : vista.tipo === "marcas" ? (
           <Marcas posts={postsMuro} siguiendo={siguiendo} onMarca={irAMarca} onSeguir={alternarSeguir} />
         ) : vista.tipo === "marca" ? (
@@ -310,6 +330,7 @@ export default function Valve() {
             <Perfil
               id={vista.id}
               usuario={usuario}
+              abrirFormularioMoto={Boolean(vista.anadirMoto)}
               posts={posts.filter((p) => p.autorId === vista.id)}
               onAbrir={setAbierto}
             />

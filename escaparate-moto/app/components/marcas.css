@@ -31,3 +31,9 @@
 .landing-bloques { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 48px; text-align: left; }
 .landing-bloques h2 { font-weight: 400; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
 .landing-bloques p { line-height: 1.6; opacity: 0.8; }
+
+/* Bienvenida */
+.bienvenida { border: 1px solid var(--linea); border-radius: 12px; padding: 20px; margin-bottom: 24px; max-width: 560px; }
+.bienvenida h2 { font-weight: 400; font-size: 1rem; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.bienvenida p { opacity: 0.8; line-height: 1.6; margin-bottom: 14px; }
+.bienvenida-acciones { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
