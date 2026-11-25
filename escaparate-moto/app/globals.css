@@ -626,7 +626,6 @@ textarea:focus-visible {
   height: auto;
   background: var(--tarjeta, #1c1c1c);
 }
-}
 
 .motos span {
   color: var(--suave);
