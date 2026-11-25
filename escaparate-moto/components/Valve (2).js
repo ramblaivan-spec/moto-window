@@ -1,0 +1,363 @@
+"use client";
+
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { supabase } from "../lib/supabase";
+import { NOMBRE } from "../config";
+import { fichas } from "../data/fichas";
+import Muro from "./Muro";
+import Auth from "./Auth";
+import Subir from "./Subir";
+import Detalle from "./Detalle";
+import Perfil from "./Perfil";
+import Rejilla from "./Rejilla";
+import MarcasDePerfil from "./MarcasDePerfil";
+import { Marcas, PaginaMarca } from "./Marcas";
+
+function convertir(p) {
+  return {
+    id: p.id,
+    titulo: p.titulo,
+    estilo: p.estilo,
+    tipo: p.tipo || "Moto",
+    marca: p.marca || "",
+    modelo: p.moto || "",
+    motoDe: p.motos ? `${p.motos.marca} ${p.motos.modelo}` : "",
+    imagen: p.imagen_url,
+    imagenPath: p.imagen_path,
+    ratio: p.ancho ? p.alto / p.ancho : 1,
+    autor: p.profiles ? p.profiles.username : "anónimo",
+    autorId: p.user_id,
+    enlace: p.enlace || "",
+    likes: p.likes && p.likes[0] ? p.likes[0].count : 0,
+    comentarios: p.comentarios && p.comentarios[0] ? p.comentarios[0].count : 0,
+  };
+}
+
+export default function Valve() {
+  const [usuario, setUsuario] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [aviso, setAviso] = useState("");
+  const [modal, setModal] = useState(null); // "auth" | "subir" | null
+  const [abierto, setAbierto] = useState(null);
+  const [vista, setVista] = useState({ tipo: "muro" });
+  const [misLikes, setMisLikes] = useState(new Set());
+  const [guardados, setGuardados] = useState(new Set());
+  const [siguiendo, setSiguiendo] = useState(new Set());
+
+  const ejemplos = useMemo(
+    () =>
+      fichas.map((f) => ({
+        id: "e" + f.id,
+        titulo: f.titulo,
+        estilo: f.estilo,
+        tipo: f.tipo,
+        marca: f.marca,
+        modelo: f.modelo,
+        ratio: f.alto,
+        tono: f.tono,
+        ejemplo: true,
+        likes: 0,
+        comentarios: 0,
+      })),
+    []
+  );
+
+  function avisar(texto) {
+    setAviso(texto);
+    setTimeout(() => setAviso(""), 2500);
+  }
+
+  // Sesión del usuario
+  useEffect(() => {
+    if (!supabase) return;
+    supabase.auth.getSession().then(({ data }) => {
+      setUsuario(data.session ? data.session.user : null);
+    });
+    const { data: sub } = supabase.auth.onAuthStateChange((_evento, sesion) => {
+      setUsuario(sesion ? sesion.user : null);
+    });
+    return () => sub.subscription.unsubscribe();
+  }, []);
+
+  // Publicaciones
+  const cargar = useCallback(async () => {
+    if (!supabase) {
+      setCargando(false);
+      return;
+    }
+    const { data, error } = await supabase
+      .from("posts")
+      .select(
+        "id,titulo,estilo,tipo,marca,moto,imagen_url,imagen_path,ancho,alto,user_id,moto_id,enlace,created_at,profiles!user_id(username),motos(marca,modelo),likes(count),comentarios(count)"
+      )
+      .order("created_at", { ascending: false })
+      .limit(80);
+    if (error) avisar("Error: " + error.message);
+    else setPosts(data.map(convertir));
+    setCargando(false);
+  }, []);
+
+  useEffect(() => {
+    cargar();
+  }, [cargar]);
+
+  // Mis me gusta
+  const cargarLikes = useCallback(async () => {
+    if (!supabase || !usuario) {
+      setMisLikes(new Set());
+      return;
+    }
+    const { data } = await supabase.from("likes").select("post_id").eq("user_id", usuario.id);
+    setMisLikes(new Set((data || []).map((l) => l.post_id)));
+  }, [usuario]);
+
+  useEffect(() => {
+    cargarLikes();
+  }, [cargarLikes]);
+
+  // Guardados y marcas seguidas (si las tablas aún no existen, se ignora)
+  const cargarMios = useCallback(async () => {
+    if (!supabase || !usuario) {
+      setGuardados(new Set());
+      setSiguiendo(new Set());
+      return;
+    }
+    const g = await supabase.from("guardados").select("post_id").eq("user_id", usuario.id);
+    setGuardados(new Set((g.data || []).map((x) => x.post_id)));
+    const m = await supabase.from("marcas_seguidas").select("marca").eq("user_id", usuario.id);
+    setSiguiendo(new Set((m.data || []).map((x) => x.marca)));
+  }, [usuario]);
+
+  useEffect(() => {
+    cargarMios();
+  }, [cargarMios]);
+
+  async function alternarGuardado(post) {
+    if (!usuario) {
+      setModal("auth");
+      return;
+    }
+    const tiene = guardados.has(post.id);
+    const sig = new Set(guardados);
+    if (tiene) sig.delete(post.id);
+    else sig.add(post.id);
+    setGuardados(sig);
+    const { error } = tiene
+      ? await supabase.from("guardados").delete().eq("post_id", post.id).eq("user_id", usuario.id)
+      : await supabase.from("guardados").insert({ post_id: post.id, user_id: usuario.id });
+    if (error) {
+      avisar("Error: " + error.message);
+      cargarMios();
+    }
+  }
+
+  async function alternarSeguir(marca) {
+    if (!usuario) {
+      setModal("auth");
+      return;
+    }
+    const tiene = siguiendo.has(marca);
+    const sig = new Set(siguiendo);
+    if (tiene) sig.delete(marca);
+    else sig.add(marca);
+    setSiguiendo(sig);
+    const { error } = tiene
+      ? await supabase.from("marcas_seguidas").delete().eq("marca", marca).eq("user_id", usuario.id)
+      : await supabase.from("marcas_seguidas").insert({ marca, user_id: usuario.id });
+    if (error) {
+      avisar("Error: " + error.message);
+      cargarMios();
+    }
+  }
+
+  function irAMarca(nombre) {
+    setAbierto(null);
+    setVista({ tipo: "marca", nombre });
+    window.scrollTo(0, 0);
+  }
+
+  async function alternarLike(post) {
+    if (!usuario) {
+      setModal("auth");
+      return;
+    }
+    const tiene = misLikes.has(post.id);
+    const siguiente = new Set(misLikes);
+    if (tiene) siguiente.delete(post.id);
+    else siguiente.add(post.id);
+    setMisLikes(siguiente);
+    setPosts((ps) =>
+      ps.map((p) => (p.id === post.id ? { ...p, likes: p.likes + (tiene ? -1 : 1) } : p))
+    );
+    const { error } = tiene
+      ? await supabase.from("likes").delete().eq("post_id", post.id).eq("user_id", usuario.id)
+      : await supabase.from("likes").insert({ post_id: post.id, user_id: usuario.id });
+    if (error) {
+      avisar("No se pudo guardar el me gusta.");
+      cargar();
+      cargarLikes();
+    }
+  }
+
+  async function eliminar(post) {
+    if (!window.confirm("¿Eliminar esta publicación?")) return;
+    const { error } = await supabase.from("posts").delete().eq("id", post.id);
+    if (error) {
+      avisar("No se pudo eliminar.");
+      return;
+    }
+    if (post.imagenPath) {
+      await supabase.storage.from("fotos").remove([post.imagenPath]);
+    }
+    setAbierto(null);
+    cargar();
+    avisar("Publicación eliminada");
+  }
+
+  function cambioComentarios(id, delta) {
+    setPosts((ps) =>
+      ps.map((p) => (p.id === id ? { ...p, comentarios: Math.max(0, p.comentarios + delta) } : p))
+    );
+  }
+
+  async function salir() {
+    await supabase.auth.signOut();
+    setVista({ tipo: "muro" });
+    setMisLikes(new Set());
+    setGuardados(new Set());
+    setSiguiendo(new Set());
+  }
+
+  function irAPerfil(id) {
+    setAbierto(null);
+    setVista({ tipo: "perfil", id });
+    window.scrollTo(0, 0);
+  }
+
+  const hayReales = posts.length > 0;
+  const postsMuro = cargando ? [] : hayReales ? posts : ejemplos;
+  const nota =
+    !cargando && !hayReales
+      ? "Estas son fichas de ejemplo. Cuando la comunidad suba sus fotos, aparecerán aquí."
+      : "";
+  const postAbierto = posts.find((p) => p.id === abierto);
+  const normal = (t) =>
+    (t || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  return (
+    <>
+      <header className="cabecera">
+        <button type="button" className="logo" onClick={() => setVista({ tipo: "muro" })}>
+          {NOMBRE}
+        </button>
+        <nav className="menu" aria-label="Principal">
+          <button type="button" onClick={() => setVista({ tipo: "marcas" })}>
+            Marcas
+          </button>
+          <button
+            type="button"
+            className="destacado"
+            onClick={() => setModal(usuario ? "subir" : "auth")}
+          >
+            Subir
+          </button>
+          {usuario ? (
+            <>
+              <button type="button" onClick={() => setVista({ tipo: "guardados" })}>
+                Guardados
+              </button>
+              <button type="button" onClick={() => irAPerfil(usuario.id)}>
+                Perfil
+              </button>
+              <button type="button" onClick={salir}>
+                Salir
+              </button>
+            </>
+          ) : (
+            <button type="button" onClick={() => setModal("auth")}>
+              Entrar
+            </button>
+          )}
+        </nav>
+      </header>
+
+      <main className="principal">
+        {vista.tipo === "muro" ? (
+          <Muro posts={postsMuro} onAbrir={setAbierto} nota={nota} />
+        ) : vista.tipo === "marcas" ? (
+          <Marcas posts={postsMuro} siguiendo={siguiendo} onMarca={irAMarca} onSeguir={alternarSeguir} />
+        ) : vista.tipo === "marca" ? (
+          <PaginaMarca
+            nombre={vista.nombre}
+            posts={postsMuro.filter((p) => normal(p.marca) === normal(vista.nombre))}
+            siguiendo={siguiendo.has(vista.nombre)}
+            onSeguir={() => alternarSeguir(vista.nombre)}
+            onAbrir={setAbierto}
+            onVolver={() => setVista({ tipo: "marcas" })}
+          />
+        ) : vista.tipo === "guardados" ? (
+          <section>
+            <h2 className="titulo-vista">Guardados</h2>
+            {posts.filter((p) => guardados.has(p.id)).length === 0 ? (
+              <p className="vacio">Aún no has guardado nada. Abre una foto y pulsa Guardar.</p>
+            ) : (
+              <Rejilla posts={posts.filter((p) => guardados.has(p.id))} onAbrir={setAbierto} />
+            )}
+          </section>
+        ) : (
+          <>
+            <Perfil
+              id={vista.id}
+              usuario={usuario}
+              posts={posts.filter((p) => p.autorId === vista.id)}
+              onAbrir={setAbierto}
+            />
+            <MarcasDePerfil key={vista.id + siguiendo.size} id={vista.id} onMarca={irAMarca} />
+          </>
+        )}
+      </main>
+
+      {modal === "auth" && (
+        <Auth
+          onCerrar={() => setModal(null)}
+          onListo={() => {
+            setModal(null);
+            avisar("Sesión iniciada");
+          }}
+        />
+      )}
+
+      {modal === "subir" && usuario && (
+        <Subir
+          usuario={usuario}
+          onCerrar={() => setModal(null)}
+          onListo={() => {
+            setModal(null);
+            cargar();
+            avisar("Foto publicada");
+          }}
+        />
+      )}
+
+      {postAbierto && (
+        <Detalle
+          key={postAbierto.id}
+          post={postAbierto}
+          usuario={usuario}
+          liked={misLikes.has(postAbierto.id)}
+          onLike={alternarLike}
+          onCerrar={() => setAbierto(null)}
+          onPerfil={irAPerfil}
+          guardado={guardados.has(postAbierto.id)}
+          onGuardar={alternarGuardado}
+          onMarca={irAMarca}
+          onEliminar={eliminar}
+          onCambioComentarios={cambioComentarios}
+        />
+      )}
+
+      {aviso && <div className="aviso">{aviso}</div>}
+    </>
+  );
+}
