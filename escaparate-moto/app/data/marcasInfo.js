@@ -552,4 +552,108 @@ export const marcasInfo = {
       ["motogadget: el visionario", "https://www.motogadget.com/en/blogs/behind-the-scenes/der-visionar-hinter-motogadget"],
     ],
   },
+  Honda: {
+    slug: "honda",
+    origen: "Hamamatsu, Japón",
+    fundada: "1948",
+    texto:
+      "Soichiro Honda fundó la compañía en 1948 junto a su socio Takeo Fujisawa. Su primera moto completa fue la Dream tipo D, de 1949, con motor de dos tiempos y chasis propios. Esa moto dio nombre a toda una serie de modelos «Dream», y la empresa creció hasta ser uno de los mayores fabricantes de motos del mundo, con la Super Cub como símbolo.",
+    web: "https://global.honda",
+    fuentes: [
+      ["Honda: la Dream D-Type", "https://global.honda/heritage/episodes/1949dtype.html"],
+      ["Honda: 75 años de historia", "https://global.honda/en/about/history-digest/75years-history/chapter2/section1_1/"],
+      ["Honda News: cronología", "https://hondanews.com/en-US/releases/honda-chronology-1959"],
+    ],
+  },
+  Yamaha: {
+    slug: "yamaha",
+    origen: "Iwata, Japón",
+    fundada: "1955",
+    texto:
+      "Yamaha Motor se creó el 1 de julio de 1955, cuando la división de motos de Nippon Gakki, el fabricante de instrumentos musicales que hoy es Yamaha Corporation, se separó como empresa independiente. Genichi Kawakami fue su primer presidente. Su primera moto fue la YA-1 de 125 cc, que se terminó a comienzos de 1955.",
+    web: "https://global.yamaha-motor.com",
+    fuentes: [
+      ["Yamaha Motor: cronología", "https://global.yamaha-motor.com/stories/history/timeline/"],
+      ["Yamaha Motor: historia", "https://global.yamaha-motor.com/stories/history/stories/0001.html"],
+      ["Wikipedia: Yamaha Motor Company", "https://en.wikipedia.org/wiki/Yamaha_Motor_Company"],
+    ],
+  },
+  Kawasaki: {
+    slug: "kawasaki",
+    origen: "Japón",
+    fundada: "Grupo de 1878; motos desde la década de 1950",
+    texto:
+      "Kawasaki Heavy Industries nació como astillero y se fue ampliando a trenes, aviación y motores. Su filial Meihatsu sacó su primera moto en 1954 y en 1960 empezó la producción integrada de motos. Ese año también se asoció con Meguro, el fabricante de motos más antiguo de Japón. Las fuentes no coinciden en cuál fue la «primera Kawasaki»: unas hablan de 1954 y otras de 1960.",
+    web: "https://global.kawasaki.com",
+    fuentes: [
+      ["Kawasaki Motors: historia", "https://global.kawasaki.com/en/corp/profile/division/motorcycle_engine/history.html"],
+      ["Kawasaki Heavy Industries: historia", "https://global.kawasaki.com/en/corp/history/03.html"],
+      ["Motorrad Online: 50 años de Kawasaki", "https://www.motorradonline.de/motorraeder/motorradproduktion-mit-jubilaeum-50-jahre-kawasaki-motorraeder/"],
+    ],
+  },
+  Suzuki: {
+    slug: "suzuki",
+    origen: "Hamamatsu, Japón",
+    fundada: "1909",
+    texto:
+      "Michio Suzuki fundó en octubre de 1909 la Suzuki Loom Works, una fábrica de telares. Entró en el mundo del motor en 1952 con la Power Free, una bicicleta motorizada de 36 cc y dos tiempos. Años después llegaron las motos y, más tarde, los coches.",
+    web: "https://www.globalsuzuki.com",
+    fuentes: [
+      ["Suzuki Canadá: historia", "https://www.suzuki.ca/history/"],
+      ["Suzuki Global: historia", "https://www.globalsuzuki.com/corporate/history/1909.html"],
+      ["RideApart: la Power Free", "https://www.rideapart.com/news/594455/suzuki-power-free-70th-anniversary/"],
+    ],
+  },
+  KTM: {
+    slug: "ktm",
+    origen: "Mattighofen, Austria",
+    fundada: "1934 (taller); 1953 (motos)",
+    texto:
+      "Hans Trunkenpolz abrió en 1934 un taller de reparación de coches y motos en Mattighofen. La producción industrial de motos empezó en 1953 con el nombre Kronreif & Trunkenpolz Mattighofen, de donde sale KTM, aunque no hay una explicación oficial del nombre. Hoy la marca es muy conocida por sus motos de campo y está ligada al grupo Pierer y a Bajaj.",
+    web: "https://www.ktm.com",
+    fuentes: [
+      ["KTM: el logo y la historia", "https://www.ktm.com/en-ee/ktm-world/stories/the-logo-and-the-look.html"],
+      ["Pierer Mobility: historia", "https://www.pierermobility.com/en/company/history"],
+      ["Wikipedia: KTM", "https://en.wikipedia.org/wiki/KTM"],
+    ],
+  },
+  Husqvarna: {
+    slug: "husqvarna",
+    origen: "Huskvarna, Suecia",
+    fundada: "1903 (motos); 1689 (la fábrica de origen)",
+    texto:
+      "La fábrica original se fundó en 1689 por orden del rey sueco para fabricar armas. Husqvarna fabricó su primera moto en 1903, una bicicleta con motor. Con los años pasó por varios dueños y desde 2013 pertenece al grupo Pierer. Es una marca histórica del motocross y el enduro.",
+    web: "https://www.husqvarna-motorcycles.com",
+    fuentes: [
+      ["Husqvarna Motorcycles: la marca", "https://husqvarna-motorcycles.com/en-us/the-brand.html"],
+      ["Wikipedia: Husqvarna Motorcycles", "https://en.wikipedia.org/wiki/Husqvarna_Motorcycles"],
+      ["RideApart: primeros años", "https://rideapart.com/articles/early-history-husqvarna-motorcycles"],
+    ],
+  },
+  Aprilia: {
+    slug: "aprilia",
+    origen: "Noale (Venecia), Italia",
+    fundada: "1945",
+    texto:
+      "Alberto Beggio la fundó tras la Segunda Guerra Mundial como fábrica de bicicletas en Noale. Su hijo Ivano se hizo cargo en 1968 y la convirtió en fabricante de motos, con mucha presencia en competición. Desde 2004 pertenece al grupo Piaggio. El nombre viene del Lancia Aprilia, un coche que admiraba Alberto.",
+    web: "https://www.aprilia.com",
+    fuentes: [
+      ["Piaggio Group: la historia de Aprilia", "https://press.piaggiogroup.com/en_EN/post/show/146743/la-storia-di-aprilia.html"],
+      ["Cycle World: cronología", "https://magazine.cycleworld.com/article/20120401037"],
+      ["Wikipedia: Aprilia", "https://en.wikipedia.org/wiki/Aprilia"],
+    ],
+  },
+  Vespa: {
+    slug: "vespa",
+    origen: "Pontedera, Italia",
+    fundada: "1946",
+    texto:
+      "Enrico Piaggio quiso crear un vehículo barato y sencillo para una Italia en reconstrucción tras la guerra y encargó el diseño al ingeniero aeronáutico Corradino D'Ascanio. La patente se presentó el 23 de abril de 1946, y se sigue fabricando en Pontedera. Hoy pertenece al grupo Piaggio.",
+    web: "https://www.vespa.com",
+    fuentes: [
+      ["Il Sole 24 Ore: 80 años de Vespa", "https://en.ilsole24ore.com/art/vespa-eighty-years-and-counting-AI0O0RDC"],
+      ["Piaggio Group: historia", "https://piaggiogroup.com/en/group/history"],
+      ["Wikipedia: Vespa", "https://en.wikipedia.org/wiki/Vespa"],
+    ],
+  },
 };
